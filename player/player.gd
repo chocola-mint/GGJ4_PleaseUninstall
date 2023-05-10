@@ -10,8 +10,8 @@ export(float, 0, 200) var move_speed = 60.0
 onready var stats : PlayerStats = $"%Stats"
 onready var body : KinematicBody2D = $"%Body"
 onready var weapons = $"%Weapons"
-onready var collision_shape : CollisionShape2D = $"%CollisionShape"
 onready var hurtbox_shape : CollisionShape2D = $"%HurtboxShape"
+onready var hurtbox_highlight = $"%HurtboxHighlight"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -21,9 +21,9 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	
 	if Input.is_action_pressed("shoot"):
 		shoot()
+	hurtbox_highlight.set_highlight(Input.is_action_pressed("focus"))
 
 func _physics_process(_delta):
 	move(Vector2(
@@ -56,11 +56,16 @@ func move(vec: Vector2):
 #	if is_move_x: vec.x = sign(vec.x)
 #	if is_move_y: vec.y = sign(vec.y)
 #	if is_move_x and is_move_y: vec *= 0.707
-	body.move_and_slide(move_speed * vec)
+	body.move_and_slide(_get_move_speed() * vec)
 	var viewport_size = get_viewport_rect().size / 2
 	body.global_position.x = clamp(body.global_position.x, -viewport_size.x, viewport_size.x)
 	body.global_position.y = clamp(body.global_position.y, -viewport_size.y, viewport_size.y)
 	pass
+
+func _get_move_speed():
+	if Input.is_action_pressed("focus"): return move_speed / 2.0
+	else: return move_speed
+
 func _on_area_shape_entered(area_id, _area, area_shape, _local_shape):
 	if not Bullets.is_bullet_existing(area_id, area_shape):
 		# The colliding area is not a bullet, returning.
@@ -88,7 +93,6 @@ func handle_hurt(damage : float):
 
 
 func _on_zero_health():
-	collision_shape.queue_free()
 	hurtbox_shape.queue_free()
 	var tween = create_tween()
 	tween.set_ease(Tween.EASE_OUT)
