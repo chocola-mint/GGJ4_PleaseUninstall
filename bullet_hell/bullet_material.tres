@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[ext_resource path="res://addons/native_bullets/utils/animated_texture.gdshader" type="Shader" id=1]
+
+[resource]
+shader = ExtResource( 1 )
+shader_param/default_orientation = 0.0
+shader_param/frames = 1
+shader_param/frame_duration = 0.1
+shader_param/texture_h_frames = 1
+shader_param/texture_v_frames = 1
+shader_param/looping = true
+shader_param/modulate = Color( 1, 1, 1, 1 )

@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://player/PincerShooter.tscn" type="PackedScene" id=1]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12.4841, -2.41266, -12.4841, 2.41266, -30, -8, 6.68928, -6.39198, -6.68928, 6.39198, -54, 2, -4.03962, -14.9696, 4.03962, 14.9696, -60, 32, 0, 0, 0, 0, -31, 49 )
+}
+
+[node name="PincerShooter" instance=ExtResource( 1 )]
+weapon_head_motion_amplitude = Vector2( 4, 6 )
+weapon_head_motion_frequency = Vector2( 6, 4 )
+
+[node name="Rope" parent="." index="0"]
+curve = SubResource( 1 )
+amplitude = Vector2( 2, 2 )
+frequency = Vector2( 3, 3 )
+
+[node name="WeaponHead" parent="." index="1"]
+position = Vector2( -31, 49 )

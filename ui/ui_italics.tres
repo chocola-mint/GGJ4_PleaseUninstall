@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+uniform float italics_factor = 0.3;
+
+void vertex(){
+	VERTEX *= mat2(vec2(1.0, -italics_factor), vec2(0.0, 1.0));
+}"
+
+[resource]
+shader = SubResource( 1 )
+shader_param/italics_factor = 0.0
