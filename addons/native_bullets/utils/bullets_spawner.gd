@@ -15,7 +15,7 @@ func on_timed_events_request(timed_events : TimedEvents):
 	timed_events.connect("event_with_leftover", self, "shoot")
 
 
-func shoot(recover_seconds = 0.0):
+func shoot(recover_seconds = 0.0, lifetime = 10.0):
 	if not enabled:
 		return
 	
@@ -27,7 +27,8 @@ func shoot(recover_seconds = 0.0):
 			"transform": Transform2D(bullet_rotation, spawner.global_position \
 				+ bullet_velocity * recover_seconds \
 				+ bullet_velocity.normalized() * bullets_spawn_distance),
-			"velocity": bullet_velocity
+			"velocity": bullet_velocity,
+			"lifetime": lifetime
 		}
 		# Use this assigned BulletKit to spawn a bullet.
 		Bullets.spawn_bullet(bullet_kit, properties)

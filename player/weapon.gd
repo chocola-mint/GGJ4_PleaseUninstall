@@ -84,8 +84,7 @@ func uninstall():
 	tween.set_trans(Tween.TRANS_QUAD)
 	tween.parallel().tween_property(self, "position:x", position.x - viewport_rect.size.x * 0.2, fall_time)
 	tween.tween_callback(self, "queue_free") # Cleanup
-	yield(SpriteUtils.flash(self, 2, 8, 8), "completed")
-	tween = create_tween()
+	tween = SpriteUtils.flash(self, 2, 8, 8)
 	tween.set_ease(Tween.EASE_IN)
 	tween.set_trans(Tween.TRANS_QUAD)
 	tween.tween_property(self, "modulate", Color(0, 0, 0, 0), 1.0)

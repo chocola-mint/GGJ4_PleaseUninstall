@@ -53,5 +53,8 @@ scale_amount_curve = SubResource( 5 )
 color = Color( 0.802667, 1, 0.68, 1 )
 color_ramp = SubResource( 6 )
 
+[node name="Main" type="Node2D" parent="Body/BulletsSpawner" index="0"]
+position = Vector2( -6, 8 )
+
 [node name="Stats" parent="." index="1"]
 health = 1.0

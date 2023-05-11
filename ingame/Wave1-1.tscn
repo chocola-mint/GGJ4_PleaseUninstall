@@ -1,0 +1,60 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://ingame/path_follow_enemy_controller.gd" type="Script" id=1]
+[ext_resource path="res://enemies/UfoSmall.tscn" type="PackedScene" id=2]
+[ext_resource path="res://bullet_hell/red_basic_bullet.tres" type="Resource" id=3]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Wave
+
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = \"text\"
+
+func start_wave():
+	$\"TopPath/1\".start()
+	yield(get_tree().create_timer(1.0), \"timeout\")
+	$\"BottomPath/1\".start()
+	yield(get_tree().create_timer(1.0), \"timeout\")
+	
+	yield(get_tree().create_timer(2.0), \"timeout\")
+	end_wave(false)
+	pass
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass
+"
+
+[sub_resource type="Curve2D" id=2]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -640, 0 )
+}
+
+[node name="Wave" type="Node2D"]
+script = SubResource( 1 )
+
+[node name="TopPath" type="Path2D" parent="."]
+position = Vector2( 256, -64 )
+curve = SubResource( 2 )
+
+[node name="1" type="PathFollow2D" parent="TopPath"]
+rotate = false
+cubic_interp = false
+loop = false
+script = ExtResource( 1 )
+enemy_scene = ExtResource( 2 )
+bullet_kit = ExtResource( 3 )
+
+[node name="BottomPath" type="Path2D" parent="."]
+position = Vector2( 256, 64 )
+curve = SubResource( 2 )
+
+[node name="1" type="PathFollow2D" parent="BottomPath"]
+rotate = false
+cubic_interp = false
+loop = false
+script = ExtResource( 1 )
+enemy_scene = ExtResource( 2 )
+bullet_kit = ExtResource( 3 )

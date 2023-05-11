@@ -21,6 +21,11 @@ func inflict_damage(amount : float):
 	health = clamp(health - amount, 0, max_health)
 	if is_zero_health(): emit_signal("on_zero_health")
 
+func kill():
+	if is_zero_health(): return
+	health = 0
+	emit_signal("on_zero_health")
+
 func heal(amount : float):
 	health = clamp(health + amount, 0, max_health)
 

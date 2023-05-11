@@ -12,15 +12,23 @@ onready var death_particles : CPUParticles2D = $"%DeathParticles"
 onready var body : KinematicBody2D = $"%Body"
 onready var hitbox_shape : CollisionShape2D = $"%HitboxShape"
 onready var hurtbox_shape : CollisionShape2D = $"%HurtboxShape"
+onready var bullet_spawner : BulletsSpawner = $"%BulletsSpawner"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	add_to_group("enemies")
 	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _process(_delta):
+	_cleanup_tick()
+
+onready var enable_cleanup : bool = false
+func _cleanup_tick():
+	if enable_cleanup:
+		if not (death_particles.emitting or hurt_invul_active):
+			queue_free()
 
 func _on_area_shape_entered(area_id, _area, area_shape, _local_shape):
 	if not Bullets.is_bullet_existing(area_id, area_shape):
@@ -31,7 +39,9 @@ func _on_area_shape_entered(area_id, _area, area_shape, _local_shape):
 	# Get bullet properties, transform, velocity, lifetime etc.
 #	var bullet_transform : Transform2D = Bullets.get_bullet_property(bullet_id, "transform")
 	# custom data: damage
-	var bullet_damage : float = Bullets.get_bullet_property(bullet_id, "data").damage
+	var data = Bullets.get_bullet_property(bullet_id, "data")
+	var bullet_damage : float = 1
+	if data: bullet_damage = data.damage
 	# You can also retrieve the BulletKit that generated the bullet and get/set its properties.
 #	var kit_collision_shape = Bullets.get_kit_from_bullet(bullet_id).collision_shape
 	# Remove the bullet, call_deferred is necessary because the Physics2DServer is in its flushing state during callbacks.
@@ -44,12 +54,14 @@ func handle_hurt(damage : float):
 	GameManager.score += 10
 	hurt_invul_active = true
 	stats.inflict_damage(damage)
-	yield(SpriteUtils.flash(self, 1), "completed")
+	if stats.is_zero_health():
+		GameManager.score += score_yield
+	var _tween = SpriteUtils.flash(self, 1).tween_callback(self, 
+	"_turn_off_hurt_invul")
+func _turn_off_hurt_invul(): 
 	hurt_invul_active = false
 
-
 func _on_zero_health():
-	GameManager.score += score_yield
 	death_particles.restart()
 	hitbox_shape.queue_free()
 	hurtbox_shape.queue_free()
@@ -57,7 +69,7 @@ func _on_zero_health():
 	tween.set_ease(Tween.EASE_OUT)
 	tween.set_trans(Tween.TRANS_QUAD)
 	tween.tween_property(self, "modulate", Color(modulate.r, modulate.g, modulate.b, 0), 0.7)
-	var tree = get_tree()
-	while death_particles.emitting or hurt_invul_active:
-		yield(tree, "idle_frame")
-	queue_free()
+	enable_cleanup = true
+	
+func _on_tree_exiting():
+	remove_from_group("enemies")

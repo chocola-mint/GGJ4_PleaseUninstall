@@ -75,6 +75,11 @@ _global_script_classes=[ {
 "path": "res://ui/game_ui.gd"
 }, {
 "base": "Node2D",
+"class": "Level",
+"language": "GDScript",
+"path": "res://ingame/level.gd"
+}, {
+"base": "Node2D",
 "class": "Player",
 "language": "GDScript",
 "path": "res://player/player.gd"
@@ -110,6 +115,11 @@ _global_script_classes=[ {
 "path": "res://ui/warning_label.gd"
 }, {
 "base": "Node2D",
+"class": "Wave",
+"language": "GDScript",
+"path": "res://ingame/wave.gd"
+}, {
+"base": "Node2D",
 "class": "Weapon",
 "language": "GDScript",
 "path": "res://player/weapon.gd"
@@ -128,6 +138,7 @@ _global_script_class_icons={
 "FollowingDynamicBulletKit": "res://addons/native_bullets/icons/icon_bullet_kit.svg",
 "Game": "",
 "GameUI": "",
+"Level": "",
 "Player": "",
 "PlayerStats": "",
 "ScoreText": "",
@@ -135,6 +146,7 @@ _global_script_class_icons={
 "TimedEvents": "res://addons/native_bullets/icons/icon_timed_events.svg",
 "TimedRotator": "res://addons/native_bullets/icons/icon_timed_rotator.svg",
 "WarningLabel": "",
+"Wave": "",
 "Weapon": ""
 }
 
@@ -165,6 +177,12 @@ enabled=PoolStringArray( "res://addons/native_bullets/plugin.cfg" )
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
+
+[importer_defaults]
+
+texture={
+"flags/filter": false
+}
 
 [input]
 

@@ -18,7 +18,7 @@ func set_target_value(val : int):
 	target_value = min(counter_stop, val)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	var diff = target_value - current_value
 	if diff != 0:
 		var exponent = floor(log(abs(diff)) / log(10))

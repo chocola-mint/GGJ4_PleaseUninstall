@@ -24,6 +24,12 @@ func _process(_delta):
 	if Input.is_action_pressed("shoot"):
 		shoot()
 	hurtbox_highlight.set_highlight(Input.is_action_pressed("focus"))
+	_cleanup_tick()
+var enable_cleanup : bool = false
+func _cleanup_tick():
+	if enable_cleanup:
+		if not hurt_invul_active:
+			queue_free()
 
 func _physics_process(_delta):
 	move(Vector2(
@@ -57,7 +63,7 @@ func move(vec: Vector2):
 #	if is_move_x: vec.x = sign(vec.x)
 #	if is_move_y: vec.y = sign(vec.y)
 #	if is_move_x and is_move_y: vec *= 0.707
-	body.move_and_slide(_get_move_speed() * vec)
+	var _velocity = body.move_and_slide(_get_move_speed() * vec)
 	var viewport_size = get_viewport_rect().size / 2
 	body.global_position.x = clamp(body.global_position.x, -viewport_size.x, viewport_size.x)
 	body.global_position.y = clamp(body.global_position.y, -viewport_size.y, viewport_size.y)
@@ -76,7 +82,8 @@ func _on_area_shape_entered(area_id, _area, area_shape, _local_shape):
 	# Get bullet properties, transform, velocity, lifetime etc.
 #	var bullet_transform : Transform2D = Bullets.get_bullet_property(bullet_id, "transform")
 	# custom data: damage
-	var bullet_damage : float = Bullets.get_bullet_property(bullet_id, "data").damage
+#	var bullet_damage : float = Bullets.get_bullet_property(bullet_id, "data").damage
+	var bullet_damage = 1
 	# You can also retrieve the BulletKit that generated the bullet and get/set its properties.
 #	var kit_collision_shape = Bullets.get_kit_from_bullet(bullet_id).collision_shape
 	# Remove the bullet, call_deferred is necessary because the Physics2DServer is in its flushing state during callbacks.
@@ -87,9 +94,10 @@ var hurt_invul_active = false
 func handle_hurt(damage : float):
 	if hurt_invul_active or damage <= 0: return
 	hurt_invul_active = true
-	stats.inflict_damage(1)
-	yield(SpriteUtils.flash(self, 1), "completed")
-	hurt_invul_active = false
+	stats.inflict_damage(damage)
+	var _tween = SpriteUtils.flash(self, 1).tween_callback(self, 
+	"_turn_off_hurt_invul")
+func _turn_off_hurt_invul(): hurt_invul_active = false
 
 
 func _on_zero_health():
@@ -98,8 +106,4 @@ func _on_zero_health():
 	tween.set_ease(Tween.EASE_OUT)
 	tween.set_trans(Tween.TRANS_QUAD)
 	tween.tween_property(self, "modulate", Color(modulate.r, modulate.g, modulate.b, 0), 0.7)
-	var tree = get_tree()
-	while hurt_invul_active:
-		yield(tree, "idle_frame")
-	yield(tree.create_timer(1.0), "timeout")
-	queue_free()
+	enable_cleanup = true

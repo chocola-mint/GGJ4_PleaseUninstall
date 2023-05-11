@@ -20,7 +20,7 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	score_text.set_target_value(GameManager.score)
 	
 	power_gauge.value = game.player.stats.power
