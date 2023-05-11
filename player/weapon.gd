@@ -56,16 +56,18 @@ func _set_ready():
 func shoot():
 	if can_shoot():
 		last_shoot_time = time
-		Bullets.spawn_bullet(bullet_kit, {
-			"transform": shoot_anchor.global_transform,
-			"velocity": Vector2(bullet_speed, 0),
-			"lifetime": 10.0,
-			"data": {
-				"damage": 1.0
-			}
-		})
+		_spawn_bullet()
 		return true
 	else: return false
+func _spawn_bullet():
+	Bullets.spawn_bullet(bullet_kit, {
+		"transform": shoot_anchor.global_transform,
+		"velocity": Vector2(bullet_speed, 0),
+		"lifetime": 10.0,
+		"data": {
+			"damage": 1.0
+		}
+	})
 
 func can_shoot(): 
 	return time - last_shoot_time > cooldown and _is_ready and not _uninstalling

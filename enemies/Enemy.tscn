@@ -54,7 +54,10 @@ collision_mask = 3
 unique_name_in_owner = true
 shape = SubResource( 4 )
 
-[node name="BulletsSpawner" type="Node2D" parent="Body"]
+[node name="TransformAdjust" type="Node2D" parent="Body"]
+rotation = 3.14159
+
+[node name="BulletsSpawner" type="Node2D" parent="Body/TransformAdjust"]
 unique_name_in_owner = true
 script = ExtResource( 5 )
 enabled = false

@@ -22,12 +22,15 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 script = ExtResource( 4 )
 
-[node name="Score" type="Control" parent="."]
+[node name="ZAdjust" type="Node2D" parent="."]
+z_index = 638
+
+[node name="Score" type="Control" parent="ZAdjust"]
 margin_top = -3.0
 margin_right = 160.0
 margin_bottom = 29.0
 
-[node name="Base" type="TextureRect" parent="Score"]
+[node name="Base" type="TextureRect" parent="ZAdjust/Score"]
 modulate = Color( 0.168627, 0.14902, 0.14902, 0.701961 )
 margin_left = -32.0
 margin_right = 128.0
@@ -35,7 +38,7 @@ margin_bottom = 32.0
 texture = ExtResource( 5 )
 expand = true
 
-[node name="ScoreLabel" type="Label" parent="Score"]
+[node name="ScoreLabel" type="Label" parent="ZAdjust/Score"]
 modulate = Color( 1, 0.913725, 0.784314, 1 )
 material = ExtResource( 1 )
 margin_left = 3.0
@@ -45,7 +48,7 @@ margin_bottom = 21.0
 theme = ExtResource( 3 )
 text = " Score"
 
-[node name="ScoreText" type="Label" parent="Score"]
+[node name="ScoreText" type="Label" parent="ZAdjust/Score"]
 unique_name_in_owner = true
 material = ExtResource( 1 )
 margin_left = 40.0
@@ -57,21 +60,21 @@ custom_colors/font_color = Color( 1, 0.984314, 0.560784, 1 )
 text = "0000000"
 script = ExtResource( 10 )
 
-[node name="Power" type="Control" parent="."]
+[node name="Power" type="Control" parent="ZAdjust"]
 anchor_top = 1.0
 anchor_bottom = 1.0
-margin_top = -27.0
+margin_top = 153.0
 margin_right = 160.0
-margin_bottom = 5.0
+margin_bottom = 185.0
 
-[node name="Under" type="TextureRect" parent="Power"]
+[node name="Under" type="TextureRect" parent="ZAdjust/Power"]
 modulate = Color( 0.168627, 0.14902, 0.14902, 0.25098 )
 margin_right = 145.0
 margin_bottom = 32.0
 texture = ExtResource( 5 )
 expand = true
 
-[node name="PowerGauge" type="TextureProgress" parent="Power"]
+[node name="PowerGauge" type="TextureProgress" parent="ZAdjust/Power"]
 unique_name_in_owner = true
 margin_left = 41.0
 margin_top = 9.0
@@ -88,7 +91,7 @@ stretch_margin_bottom = 1
 script = ExtResource( 8 )
 override_progress_gradient = SubResource( 1 )
 
-[node name="LowPowerWarning" type="Label" parent="Power/PowerGauge"]
+[node name="LowPowerWarning" type="Label" parent="ZAdjust/Power/PowerGauge"]
 unique_name_in_owner = true
 material = ExtResource( 1 )
 anchor_right = 1.0
@@ -100,14 +103,14 @@ align = 1
 valign = 1
 script = ExtResource( 9 )
 
-[node name="Over" type="TextureRect" parent="Power"]
+[node name="Over" type="TextureRect" parent="ZAdjust/Power"]
 modulate = Color( 0.168627, 0.14902, 0.14902, 0.94902 )
 margin_right = 145.0
 margin_bottom = 32.0
 texture = ExtResource( 6 )
 expand = true
 
-[node name="PowerLabel" type="Label" parent="Power"]
+[node name="PowerLabel" type="Label" parent="ZAdjust/Power"]
 material = ExtResource( 1 )
 margin_left = 3.0
 margin_top = 9.0

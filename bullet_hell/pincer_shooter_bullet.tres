@@ -19,5 +19,5 @@ active_rect = Rect2( 0, 0, 0, 0 )
 rotate = true
 unique_modulate_component = 0
 data = {
-"damage": 1.0
+"damage": 2.0
 }
