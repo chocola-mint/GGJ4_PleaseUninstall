@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "ParallaxBackground",
 "class": "AutoscrollParallax",
 "language": "GDScript",
-"path": "res://AutoscrollParallax.gd"
+"path": "res://autoscroll_parallax.gd"
 }, {
 "base": "Resource",
 "class": "BasicBulletKit",
@@ -47,7 +47,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "Enemy",
 "language": "GDScript",
-"path": "res://enemy.gd"
+"path": "res://enemies/enemy.gd"
 }, {
 "base": "Node",
 "class": "EntityStats",

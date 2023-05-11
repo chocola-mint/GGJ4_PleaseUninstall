@@ -54,7 +54,7 @@ func _set_ready():
 	hitbox_shape.set_deferred("disabled", false)
 
 func shoot():
-	if time - last_shoot_time > cooldown and _is_ready:
+	if can_shoot():
 		last_shoot_time = time
 		Bullets.spawn_bullet(bullet_kit, {
 			"transform": shoot_anchor.global_transform,
@@ -64,7 +64,11 @@ func shoot():
 				"damage": 1.0
 			}
 		})
+		return true
+	else: return false
 
+func can_shoot(): 
+	return time - last_shoot_time > cooldown and _is_ready and not _uninstalling
 var _uninstalling = false
 func uninstall():
 	if _uninstalling: return

@@ -60,9 +60,9 @@ script = ExtResource( 10 )
 [node name="Power" type="Control" parent="."]
 anchor_top = 1.0
 anchor_bottom = 1.0
-margin_top = -29.0
+margin_top = -27.0
 margin_right = 160.0
-margin_bottom = 3.0
+margin_bottom = 5.0
 
 [node name="Under" type="TextureRect" parent="Power"]
 modulate = Color( 0.168627, 0.14902, 0.14902, 0.25098 )

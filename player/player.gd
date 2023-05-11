@@ -42,13 +42,14 @@ func has_weapon(weapon_scene : PackedScene):
 func shoot():
 	var children = weapons.get_children()
 	for child in children:
-		var weapon = child as Weapon
+		var weapon : Weapon = child as Weapon
 		if weapon:
 			if stats.is_low_power() and rand_range(0.0, 1.0) > stats.power:
-				stats.consume_power(weapon.power_cost * len(children))
+				if weapon.can_shoot():
+					stats.consume_power(weapon.power_cost * len(children))
 			else:
-				weapon.shoot()
-				stats.consume_power(weapon.power_cost * len(children))
+				if weapon.shoot():
+					stats.consume_power(weapon.power_cost * len(children))
 
 func move(vec: Vector2):
 #	var is_move_x = abs(vec.x) > 0.001
@@ -84,10 +85,9 @@ func _on_area_shape_entered(area_id, _area, area_shape, _local_shape):
 
 var hurt_invul_active = false
 func handle_hurt(damage : float):
-	if hurt_invul_active: return
+	if hurt_invul_active or damage <= 0: return
 	hurt_invul_active = true
-	print("take damage: " + str(damage))
-	stats.inflict_damage(damage)
+	stats.inflict_damage(1)
 	yield(SpriteUtils.flash(self, 1), "completed")
 	hurt_invul_active = false
 
