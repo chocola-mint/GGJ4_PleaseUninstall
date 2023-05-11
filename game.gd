@@ -20,6 +20,7 @@ var current_level : Level
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	GameManager.player = player
+	player.add_weapon(weapon_list_t0[0])
 	var tween = get_tree().create_tween().bind_node(self).set_loops()
 	tween.tween_callback(self, "_add_weapon", [weapon_list_t0]).set_delay(5.0)
 	_start_level(0)

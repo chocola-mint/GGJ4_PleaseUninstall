@@ -1,12 +1,17 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
-[ext_resource path="res://bullet_hell/green_basic_bullet.png" type="Texture" id=1]
+[ext_resource path="res://bullet_hell/purple_basic_bullet.png" type="Texture" id=1]
 [ext_resource path="res://player/player.gd" type="Script" id=2]
 [ext_resource path="res://common/player_stats.gd" type="Script" id=3]
 [ext_resource path="res://player/appli-chan.png" type="Texture" id=4]
 [ext_resource path="res://player/hurtbox_highlight.gd" type="Script" id=5]
 [ext_resource path="res://third_party/kenney/particlePack/smoke_04.png" type="Texture" id=6]
 [ext_resource path="res://common/Stats.tscn" type="PackedScene" id=7]
+
+[sub_resource type="Curve" id=16]
+min_value = 1.0
+max_value = 30.0
+_data = [ Vector2( 0, 1 ), 0.0, 83.6608, 0, 0, Vector2( 1, 30 ), 0.0, 0.0, 0, 0 ]
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 4 )
@@ -39,6 +44,7 @@ colors = PoolColorArray( 1, 0.576997, 0.0421941, 1, 1, 1, 1, 0 )
 
 [node name="Player" type="Node2D"]
 script = ExtResource( 2 )
+weapon_count_cost_multiplier = SubResource( 16 )
 
 [node name="Body" type="KinematicBody2D" parent="."]
 unique_name_in_owner = true
@@ -51,6 +57,7 @@ unique_name_in_owner = true
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Body"]
 position = Vector2( 0, -8 )
 frames = SubResource( 4 )
+frame = 1
 playing = true
 
 [node name="Hurtbox" type="Area2D" parent="Body"]
@@ -93,3 +100,5 @@ angle_random = 1.0
 scale_amount = 0.01
 scale_amount_curve = SubResource( 14 )
 color_ramp = SubResource( 15 )
+
+[connection signal="area_shape_entered" from="Body/Hurtbox" to="." method="_on_area_shape_entered"]

@@ -9,6 +9,8 @@ export(float, 0, 3) var cooldown = 0.1
 export(float, 0.0001, 0.5) var power_cost = 0.001
 export(Vector2) var weapon_head_motion_amplitude = Vector2(5.0, 5.0)
 export(Vector2) var weapon_head_motion_frequency = Vector2(-5.0, -5.0)
+export(AudioStream) var shoot_sfx : AudioStream
+export(AudioStream) var shoot_dud_sfx : AudioStream
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -57,8 +59,16 @@ func shoot():
 	if can_shoot():
 		last_shoot_time = time
 		_spawn_bullet()
+		AudioUtils.play_one_shot(shoot_sfx, global_position)
 		return true
 	else: return false
+func shoot_dud():
+	if can_shoot():
+		last_shoot_time = time
+		AudioUtils.play_one_shot(shoot_dud_sfx, global_position)
+		return true
+	else: return false
+	
 func _spawn_bullet():
 	Bullets.spawn_bullet(bullet_kit, {
 		"transform": shoot_anchor.global_transform,

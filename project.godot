@@ -160,6 +160,7 @@ config/icon="res://icon.png"
 
 Bullets="*res://addons/native_bullets/bullets.gdns"
 GameManager="*res://game_manager.gd"
+AudioUtils="*res://sound/audio_utils.gd"
 
 [display]
 

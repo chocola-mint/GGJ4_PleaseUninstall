@@ -7,4 +7,5 @@
 [node name="PincerShooter" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 bullet_speed = 700.0
+power_cost = 0.02
 missile_kit = ExtResource( 3 )

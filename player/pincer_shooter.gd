@@ -19,7 +19,7 @@ func _spawn_bullet():
 		Bullets.spawn_bullet(missile_kit, {
 			"target_node": GameManager.target,
 			"transform": shoot_anchor.global_transform,
-			"velocity": Vector2(bullet_speed, 0),
+			"velocity": Vector2(bullet_speed * 0.45, 0),
 			"lifetime": 10.0,
 			"data": {
 				"damage": 1.0

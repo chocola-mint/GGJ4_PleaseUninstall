@@ -3,6 +3,8 @@ extends Node2D
 class_name Player
 
 export(float, 0, 200) var move_speed = 60.0
+export(Curve) var weapon_count_cost_multiplier : Curve
+export(int, 1, 10) var weapon_count_cost_limit = 4
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -50,12 +52,15 @@ func shoot():
 	for child in children:
 		var weapon : Weapon = child as Weapon
 		if weapon:
-			if stats.is_low_power() and rand_range(0.0, 1.0) > stats.power:
-				if weapon.can_shoot():
-					stats.consume_power(weapon.power_cost * len(children))
+			if stats.is_low_power() and rand_range(0.0, 1.0) > pow(stats.power, 1.0):
+				if weapon.shoot_dud():
+					stats.consume_power(weapon.power_cost * _compute_power_cost(weapon, weapons.get_child_count()))
 			else:
 				if weapon.shoot():
-					stats.consume_power(weapon.power_cost * len(children))
+					stats.consume_power(weapon.power_cost * _compute_power_cost(weapon, weapons.get_child_count()))
+
+func _compute_power_cost(weapon : Weapon, weapon_count : float):
+	return weapon.power_cost * weapon_count_cost_multiplier.interpolate(clamp(weapon_count / weapon_count_cost_limit, 0.0, 1.0))
 
 func move(vec: Vector2):
 #	var is_move_x = abs(vec.x) > 0.001
@@ -95,8 +100,8 @@ func handle_hurt(damage : float):
 	if hurt_invul_active or damage <= 0: return
 	hurt_invul_active = true
 	stats.inflict_damage(damage)
-	var _tween = SpriteUtils.flash(self, 1).tween_callback(self, 
-	"_turn_off_hurt_invul")
+	var _tween = SpriteUtils.flash(self, 4).tween_callback(self, 
+	"_turn_off_hurt_invul").set_delay(0.1)
 func _turn_off_hurt_invul(): hurt_invul_active = false
 
 

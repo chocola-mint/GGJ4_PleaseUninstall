@@ -10,6 +10,7 @@ script/source = "extends Level
 
 func _level_script():
 	yield(_handle_wave(preload(\"res://ingame/Wave1-1.tscn\")), \"completed\")
+	print(\"wave 1-1 end\")
 	_mark_level_end()
 	
 
