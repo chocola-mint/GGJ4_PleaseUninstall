@@ -21,6 +21,9 @@ var current_level : Level
 func _ready():
 	GameManager.player = player
 	player.add_weapon(weapon_list_t0[0])
+	player.add_weapon(weapon_list_t0[1])
+	player.add_weapon(weapon_list_t0[2])
+	player.add_weapon(weapon_list_t0[3])
 	var tween = get_tree().create_tween().bind_node(self).set_loops()
 	tween.tween_callback(self, "_add_weapon", [weapon_list_t0]).set_delay(5.0)
 	_start_level(0)

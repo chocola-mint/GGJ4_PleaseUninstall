@@ -27,7 +27,7 @@ func _process(_delta):
 onready var enable_cleanup : bool = false
 func _cleanup_tick():
 	if enable_cleanup:
-		if not (death_particles.emitting or hurt_invul_active):
+		if not (death_particles.emitting):
 			queue_free()
 
 func _on_area_shape_entered(area_id, _area, area_shape, _local_shape):
@@ -48,18 +48,15 @@ func _on_area_shape_entered(area_id, _area, area_shape, _local_shape):
 	Bullets.call_deferred("release_bullet", bullet_id)
 	handle_hurt(bullet_damage)
 
-var hurt_invul_active = false
+var _flash_tween : SceneTreeTween = null
 func handle_hurt(damage : float):
-	if hurt_invul_active: return
+	if _flash_tween and _flash_tween.is_running(): return
 	GameManager.score += 10
-	hurt_invul_active = true
 	stats.inflict_damage(damage)
 	if stats.is_zero_health():
 		GameManager.score += score_yield
-	var _tween = SpriteUtils.flash(self, 1).tween_callback(self, 
-	"_turn_off_hurt_invul")
-func _turn_off_hurt_invul(): 
-	hurt_invul_active = false
+	if _flash_tween: _flash_tween.stop()
+	_flash_tween = SpriteUtils.flash(self, 1)
 
 func _on_zero_health():
 	death_particles.restart()

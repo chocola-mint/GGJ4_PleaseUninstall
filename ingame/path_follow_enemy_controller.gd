@@ -2,7 +2,7 @@ extends PathFollow2D
 export(float, 1, 1000) var move_speed = 50.0
 export(PackedScene) var enemy_scene
 export(Resource) var bullet_kit
-export(float, 1, 1000) var bullet_speed = 100.0
+export(float, 1, 1000) var bullet_speed = 150.0
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -29,9 +29,9 @@ func start():
 func disable(): enabled = false
 func exec_script():
 	var tween = get_tree().create_tween().bind_node(enemy).set_loops()
-	tween.tween_callback(self, "_shoot").set_delay(1.0)
+	tween.tween_callback(self, "_shoot").set_delay(0.5)
 func _shoot():
-	enemy.bullet_spawner.shoot(0.1)
+	enemy.bullet_spawner.shoot(0, 10.0, GameManager.player.body)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if is_started and enabled:

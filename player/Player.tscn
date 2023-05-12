@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://bullet_hell/purple_basic_bullet.png" type="Texture" id=1]
 [ext_resource path="res://player/player.gd" type="Script" id=2]
@@ -21,12 +21,21 @@ region = Rect2( 0, 0, 64, 64 )
 atlas = ExtResource( 4 )
 region = Rect2( 64, 0, 64, 64 )
 
+[sub_resource type="AtlasTexture" id=17]
+atlas = ExtResource( 4 )
+region = Rect2( 128, 0, 64, 64 )
+
 [sub_resource type="SpriteFrames" id=4]
 animations = [ {
 "frames": [ SubResource( 2 ), SubResource( 3 ) ],
 "loop": true,
 "name": "default",
 "speed": 2.5
+}, {
+"frames": [ SubResource( 17 ) ],
+"loop": true,
+"name": "knockout",
+"speed": 5.0
 } ]
 
 [sub_resource type="CircleShape2D" id=12]
@@ -55,6 +64,7 @@ collision/safe_margin = 0.001
 unique_name_in_owner = true
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Body"]
+unique_name_in_owner = true
 position = Vector2( 0, -8 )
 frames = SubResource( 4 )
 frame = 1
@@ -82,7 +92,8 @@ power = 0.5
 power_regen_tick = 0.05
 power_regen_per_tick = 0.01
 
-[node name="CPUParticles2D" type="CPUParticles2D" parent="Body"]
+[node name="TrailParticles" type="CPUParticles2D" parent="Body"]
+unique_name_in_owner = true
 material = SubResource( 13 )
 position = Vector2( -5, 7 )
 z_index = -4
@@ -102,3 +113,4 @@ scale_amount_curve = SubResource( 14 )
 color_ramp = SubResource( 15 )
 
 [connection signal="area_shape_entered" from="Body/Hurtbox" to="." method="_on_area_shape_entered"]
+[connection signal="on_zero_health" from="Body/Stats" to="." method="_on_zero_health"]

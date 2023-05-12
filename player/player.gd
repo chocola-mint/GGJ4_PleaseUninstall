@@ -2,7 +2,7 @@ extends Node2D
 
 class_name Player
 
-export(float, 0, 200) var move_speed = 60.0
+export(float, 0, 200) var move_speed = 120.0
 export(Curve) var weapon_count_cost_multiplier : Curve
 export(int, 1, 10) var weapon_count_cost_limit = 4
 
@@ -11,9 +11,11 @@ export(int, 1, 10) var weapon_count_cost_limit = 4
 # var b = "text"
 onready var stats : PlayerStats = $"%Stats"
 onready var body : KinematicBody2D = $"%Body"
+onready var animated_sprite : AnimatedSprite = $"%AnimatedSprite"
 onready var weapons = $"%Weapons"
 onready var hurtbox_shape : CollisionShape2D = $"%HurtboxShape"
-onready var hurtbox_highlight = $"%HurtboxHighlight"
+onready var hurtbox_highlight : Sprite = $"%HurtboxHighlight"
+onready var trail_particles : CPUParticles2D = $"%TrailParticles"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -31,7 +33,7 @@ var enable_cleanup : bool = false
 func _cleanup_tick():
 	if enable_cleanup:
 		if not hurt_invul_active:
-			queue_free()
+			pass # TODO: Respawn?
 
 func _physics_process(_delta):
 	move(Vector2(
@@ -100,15 +102,44 @@ func handle_hurt(damage : float):
 	if hurt_invul_active or damage <= 0: return
 	hurt_invul_active = true
 	stats.inflict_damage(damage)
-	var _tween = SpriteUtils.flash(self, 4).tween_callback(self, 
-	"_turn_off_hurt_invul").set_delay(0.1)
+	var _tween = SpriteUtils.flash(animated_sprite, 2)
+	_tween = create_tween().tween_callback(self, 
+	"_turn_off_hurt_invul").set_delay(0.5)
 func _turn_off_hurt_invul(): hurt_invul_active = false
 
+func uninstall_all_weapons(delay : float = 0.0):
+	for child in weapons.get_children():
+		var weapon : Weapon = child as Weapon
+		if delay > 0.0:
+			var tween = weapon.create_tween()
+			tween.tween_callback(weapon, "uninstall").set_delay(weapon.get_index() * delay)
+		else: weapon.uninstall()
 
 func _on_zero_health():
-	hurtbox_shape.queue_free()
+	hurtbox_shape.set_deferred("disabled", true)
+	hurtbox_highlight.visible = false
+	trail_particles.emitting = false
+	uninstall_all_weapons(0.1)
+	# Fade
 	var tween = create_tween()
-	tween.set_ease(Tween.EASE_OUT)
-	tween.set_trans(Tween.TRANS_QUAD)
-	tween.tween_property(self, "modulate", Color(modulate.r, modulate.g, modulate.b, 0), 0.7)
-	enable_cleanup = true
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.set_trans(Tween.TRANS_CIRC)
+	tween.tween_property(self, "modulate", Color(1.0, 0.0, 0.0, 0), 2.0)
+	animated_sprite.play("knockout")
+	tween.tween_callback(self, "_set_enable_cleanup", [true])
+	# Shake
+	tween = create_tween()
+	tween.set_loops(16)
+	tween.tween_callback(self, "set_position", [Vector2.UP]).set_delay(0.02)
+	tween.tween_callback(self, "set_position", [Vector2.DOWN]).set_delay(0.02)
+	tween.tween_callback(self, "set_position", [Vector2.LEFT]).set_delay(0.02)
+	tween.tween_callback(self, "set_position", [Vector2.RIGHT]).set_delay(0.02)
+	tween.tween_callback(self, "set_position", [Vector2.ZERO]).set_delay(0.02)
+	# Fall
+	tween = create_tween()
+	tween.tween_callback(self, "_pass").set_delay(0.4)
+	tween.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
+	tween.tween_property(self, "position", Vector2(-80, 300), 2.0)
+
+func _set_enable_cleanup(val : bool): enable_cleanup = val
+func _pass(): pass

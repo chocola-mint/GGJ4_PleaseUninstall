@@ -15,11 +15,12 @@ func on_timed_events_request(timed_events : TimedEvents):
 	timed_events.connect("event_with_leftover", self, "shoot")
 
 
-func shoot(recover_seconds = 0.0, lifetime = 10.0):
+func shoot(recover_seconds = 0.0, lifetime = 10.0, aim : Node2D = null):
 	if not enabled:
 		return
 	
 	for spawner in get_children():
+		if aim: spawner.look_at(aim.global_position)
 		var bullet_rotation = spawner.global_rotation
 		var bullet_velocity = Vector2(cos(bullet_rotation), sin(bullet_rotation)) * bullets_speed
 		
