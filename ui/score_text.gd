@@ -16,6 +16,9 @@ func _ready():
 
 func set_target_value(val : int):
 	target_value = min(counter_stop, val)
+func snap_to_value(val : int):
+	set_target_value(val)
+	current_value = target_value
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):

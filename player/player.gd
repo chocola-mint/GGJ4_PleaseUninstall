@@ -6,13 +6,15 @@ export(float, 0, 200) var move_speed = 120.0
 export(Curve) var weapon_count_cost_multiplier : Curve
 export(int, 1, 10) var weapon_count_cost_limit = 4
 
+signal game_over
+
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
 onready var stats : PlayerStats = $"%Stats"
 onready var body : KinematicBody2D = $"%Body"
 onready var animated_sprite : AnimatedSprite = $"%AnimatedSprite"
-onready var weapons = $"%Weapons"
+onready var weapons : Node2D = $"%Weapons"
 onready var hurtbox_shape : CollisionShape2D = $"%HurtboxShape"
 onready var hurtbox_highlight : Sprite = $"%HurtboxHighlight"
 onready var trail_particles : CPUParticles2D = $"%TrailParticles"
@@ -36,11 +38,13 @@ func _cleanup_tick():
 			pass # TODO: Respawn?
 
 func _physics_process(_delta):
-	move(Vector2(
-		Input.get_action_strength("right") - Input.get_action_strength("left"),
-		Input.get_action_strength("down") - Input.get_action_strength("up")))
+	if stats.health > 0:
+		move(Vector2(
+			Input.get_action_strength("right") - Input.get_action_strength("left"),
+			Input.get_action_strength("down") - Input.get_action_strength("up")))
 
-func add_weapon(weapon_scene : PackedScene):
+func add_weapon(weapon_scene : PackedScene, check : bool = false):
+	if check: if has_weapon(weapon_scene): return
 	weapons.add_child(weapon_scene.instance())
 
 func has_weapon(weapon_scene : PackedScene):
@@ -86,6 +90,7 @@ func _on_area_shape_entered(area_id, _area, area_shape, _local_shape):
 		return
 	# Get a BulletID from the area_shape passed in by the engine.
 	var bullet_id = Bullets.get_bullet_from_shape(area_id, area_shape)
+	GameManager.add_bullet_dust(preload("res://bullet_hell/BulletDust.tscn"), bullet_id)
 	# Get bullet properties, transform, velocity, lifetime etc.
 #	var bullet_transform : Transform2D = Bullets.get_bullet_property(bullet_id, "transform")
 	# custom data: damage
@@ -116,6 +121,12 @@ func uninstall_all_weapons(delay : float = 0.0):
 		else: weapon.uninstall()
 
 func _on_zero_health():
+	for i in range(0, 3):
+		var copy : CPUParticles2D = $"%DeathParticles".duplicate()
+		add_child(copy)
+		copy.global_position = body.global_position
+		copy.amount += int(round(5.0 * pow(i, 1.5)))
+		copy.create_tween().tween_callback(copy, "restart").set_delay(pow(i, 1.5) * 0.2)
 	hurtbox_shape.set_deferred("disabled", true)
 	hurtbox_highlight.visible = false
 	trail_particles.emitting = false
@@ -140,6 +151,9 @@ func _on_zero_health():
 	tween.tween_callback(self, "_pass").set_delay(0.4)
 	tween.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
 	tween.tween_property(self, "position", Vector2(-80, 300), 2.0)
+	# Game over overlay after fall
+	tween.tween_callback(self, "emit_signal", ["game_over"])
+	
 
 func _set_enable_cleanup(val : bool): enable_cleanup = val
 func _pass(): pass

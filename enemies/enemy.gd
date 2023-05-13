@@ -13,6 +13,7 @@ onready var body : KinematicBody2D = $"%Body"
 onready var hitbox_shape : CollisionShape2D = $"%HitboxShape"
 onready var hurtbox_shape : CollisionShape2D = $"%HurtboxShape"
 onready var bullet_spawner : BulletsSpawner = $"%BulletsSpawner"
+var score_yield_on_hit = 10
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -50,12 +51,11 @@ func _on_area_shape_entered(area_id, _area, area_shape, _local_shape):
 
 var _flash_tween : SceneTreeTween = null
 func handle_hurt(damage : float):
-	if _flash_tween and _flash_tween.is_running(): return
-	GameManager.score += 10
+	GameManager.score += score_yield_on_hit 
 	stats.inflict_damage(damage)
 	if stats.is_zero_health():
 		GameManager.score += score_yield
-	if _flash_tween: _flash_tween.stop()
+	if _flash_tween and _flash_tween.is_running(): return
 	_flash_tween = SpriteUtils.flash(self, 1)
 
 func _on_zero_health():

@@ -15,12 +15,12 @@ export(AudioStream) var shoot_dud_sfx : AudioStream
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-onready var weapon_head = $"%WeaponHead" as Node2D
+onready var weapon_head :Node2D = $"%WeaponHead"
 onready var weapon_head_initial_position = weapon_head.position
-onready var shoot_anchor = $"%ShootAnchor" as Node2D
+onready var shoot_anchor : Node2D = $"%ShootAnchor"
 onready var last_shoot_time = 0
 onready var time = 0
-onready var hitbox_shape = $"%HitboxShape" as CollisionShape2D
+onready var hitbox_shape : CollisionShape2D = $"%HitboxShape"
 var _is_ready = false
 
 
@@ -75,7 +75,7 @@ func _spawn_bullet():
 		"velocity": Vector2(bullet_speed, 0),
 		"lifetime": 10.0,
 		"data": {
-			"damage": 1.0
+			"damage": bullet_kit.data.damage
 		}
 	})
 
@@ -85,7 +85,7 @@ var _uninstalling = false
 func uninstall():
 	if _uninstalling: return
 	_uninstalling = true
-	hitbox_shape.queue_free()
+	hitbox_shape.set_deferred("disabled", false)
 	var viewport_rect = get_viewport_rect()
 	var tween = create_tween()
 	tween.set_ease(Tween.EASE_IN)

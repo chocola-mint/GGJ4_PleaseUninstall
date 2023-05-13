@@ -1,0 +1,114 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://common/alpha_cutoff_material.tres" type="Material" id=1]
+[ext_resource path="res://title-no-text.png" type="Texture" id=2]
+[ext_resource path="res://title-text.png" type="Texture" id=3]
+[ext_resource path="res://ui/ui_outlined.tres" type="Theme" id=4]
+[ext_resource path="res://title.gd" type="Script" id=5]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends TextureRect
+
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = \"text\"
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	var tween = create_tween()
+	tween.set_loops()
+	tween.tween_callback(self, \"set_position\", [Vector2.DOWN]).set_delay(0.5)
+	tween.tween_callback(self, \"_pass\").set_delay(1.0)
+	tween.tween_callback(self, \"set_position\", [Vector2.UP]).set_delay(0.5)
+	tween.tween_callback(self, \"_pass\").set_delay(0.5)
+	pass # Replace with function body.
+func _pass():
+	pass
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass
+"
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends Label
+
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = \"text\"
+var time = 0
+onready var title_cg = $\"%TitleCG\"
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	if cos(time * 2.0) >= -0.8:
+		modulate.a = 1
+	else: modulate.a = 0
+	time += delta
+
+func _input(event):
+	if visible:
+		if event is InputEventKey or event is InputEventJoypadButton:
+			visible = false
+			var tween = title_cg.create_tween()
+			tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
+			tween.tween_property(title_cg, \"modulate\", Color(0.6, 0.6, 0.6), 1.0)
+			$\"..\".emit_load_game()
+"
+
+[node name="Title" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 5 )
+
+[node name="TitleCG" type="Control" parent="."]
+unique_name_in_owner = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="TitleBG" type="TextureRect" parent="TitleCG"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 2 )
+
+[node name="TitleText" type="TextureRect" parent="TitleCG"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 3 )
+script = SubResource( 1 )
+
+[node name="Watermark" type="Label" parent="TitleCG"]
+material = ExtResource( 1 )
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 3.0
+margin_top = -13.0
+margin_right = 123.0
+margin_bottom = -1.0
+theme = ExtResource( 4 )
+custom_colors/font_color = Color( 0.737255, 1, 0.956863, 1 )
+custom_colors/font_outline_modulate = Color( 0.58, 1.37, 1.26, 1 )
+text = "Game by ChocolaMint"
+valign = 1
+
+[node name="PressAnyKey" type="Label" parent="."]
+unique_name_in_owner = true
+material = ExtResource( 1 )
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -32.0
+margin_bottom = -8.0
+theme = ExtResource( 4 )
+text = "Press Any Button"
+align = 1
+valign = 1
+script = SubResource( 2 )

@@ -1,24 +1,96 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://ui/Banner.tscn" type="PackedScene" id=1]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Level
 
-
 # Declare member variables here. Examples:
 # var a = 2
 # var b = \"text\"
+onready var banner : Banner = $\"%Banner\"
+onready var weapon_list_t0 = [
+	preload(\"res://player/PincerShooter.tscn\"),
+	preload(\"res://player/PincerShooter_Var1.tscn\"),
+	preload(\"res://player/PincerShooter_Var2.tscn\"),
+	preload(\"res://player/PincerShooter_Var3.tscn\"),
+]
+signal skip
 
 func _level_script():
+	yield(get_tree().create_timer(1.0), \"timeout\")
+	if not GameManager.not_first_play:
+		banner.title.text = \"Tutorial\"
+		banner.subtitle.text = \"(Hold Esc to skip)\"
+		banner.show(2.0)
+		yield(get_tree().create_timer(3.0), \"timeout\")
+		if not Input.is_action_pressed(\"ui_cancel\"):
+			yield(_handle_wave(preload(\"res://ingame/TutorialWave.tscn\")), \"completed\")
+	GameManager.player.add_weapon(weapon_list_t0[0])
+	# No bonus for tutorial wave
+	print(\"tutorial wave end\")
+	
+	banner.title.text = \"Mission Start!\"
+	banner.subtitle.visible = false
+	banner.show(1.0)
 	yield(_handle_wave(preload(\"res://ingame/Wave1-1.tscn\")), \"completed\")
+	_give_wave_bonus()
 	print(\"wave 1-1 end\")
+	
+	banner.title.text = \"Wave 1 Cleared\"
+	banner.subtitle.visible = false
+	banner.show(1.0)
+	yield(get_tree().create_timer(2.0), \"timeout\")
+	yield(_handle_wave(preload(\"res://ingame/Wave1-2.tscn\")), \"completed\")
+	_give_wave_bonus()
+	print(\"wave 1-2 end\")
+	banner.title.text = \"Wave 2 Cleared\"
+	banner.subtitle.visible = false
+	banner.show(1.0)
+	yield(get_tree().create_timer(2.0), \"timeout\")
+	
 	_mark_level_end()
 	
 
+func _give_wave_bonus():
+	var weapon_count = GameManager.player.weapons.get_child_count()
+	if weapon_count >= 4:
+		GameManager.score += 5000
+	elif weapon_count == 0:
+		GameManager.score += 15000
+	else: 
+		GameManager.score += 2500
+	_add_weapon(weapon_list_t0)
+	if weapon_count == 2:
+		GameManager.player.stats.heal(1)
+	elif weapon_count == 1:
+		GameManager.player.stats.heal(2)
+	elif weapon_count == 0:
+		GameManager.player.stats.heal(3)
+	
+
+
+# Returns whether a weapon is added successfully.
+# Basically, false when no weapon can be added.
+func _add_weapon(list : Array):
+	var filtered = []
+	for weapon in list:
+		if not GameManager.player.has_weapon(weapon):
+			filtered.append(weapon)
+	if filtered.empty(): return false
+	else:
+		GameManager.player.add_weapon(filtered[randi() % filtered.size()])
+		return true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
+	if Input.is_action_pressed(\"ui_cancel\"):
+		emit_signal(\"skip\")
 	pass
 "
 
 [node name="Level" type="Node2D"]
 script = SubResource( 1 )
+
+[node name="Banner" parent="." instance=ExtResource( 1 )]
+unique_name_in_owner = true

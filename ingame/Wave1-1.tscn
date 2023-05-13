@@ -13,14 +13,12 @@ script/source = "extends Wave
 # var b = \"text\"
 
 func start_wave():
-	$\"TopPath/1\".start()
-	yield(get_tree().create_timer(1.0), \"timeout\")
-	$\"BottomPath/1\".start()
-	yield(get_tree().create_timer(1.0), \"timeout\")
-	
-	yield(get_tree().create_timer(2.0), \"timeout\")
-	end_wave(false)
-	pass
+	var tween = create_tween()
+	for enemy in $\"TopPath\".get_children():
+		tween.tween_callback(enemy, \"start\").set_delay(1.0)
+	for enemy in $\"BottomPath\".get_children():
+		tween.tween_callback(enemy, \"start\").set_delay(1.0)
+	tween.tween_callback(self, \"end_wave\", [true]).set_delay(6.0)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -36,7 +34,7 @@ _data = {
 script = SubResource( 1 )
 
 [node name="TopPath" type="Path2D" parent="."]
-position = Vector2( 256, -64 )
+position = Vector2( 192, -64 )
 curve = SubResource( 2 )
 
 [node name="1" type="PathFollow2D" parent="TopPath"]
@@ -44,11 +42,53 @@ rotate = false
 cubic_interp = false
 loop = false
 script = ExtResource( 1 )
+move_speed = 75.0
 enemy_scene = ExtResource( 2 )
 bullet_kit = ExtResource( 3 )
+bullet_speed = 75.0
+
+[node name="2" type="PathFollow2D" parent="TopPath"]
+rotate = false
+cubic_interp = false
+loop = false
+script = ExtResource( 1 )
+move_speed = 75.0
+enemy_scene = ExtResource( 2 )
+bullet_kit = ExtResource( 3 )
+bullet_speed = 75.0
+
+[node name="3" type="PathFollow2D" parent="TopPath"]
+rotate = false
+cubic_interp = false
+loop = false
+script = ExtResource( 1 )
+move_speed = 75.0
+enemy_scene = ExtResource( 2 )
+bullet_kit = ExtResource( 3 )
+bullet_speed = 75.0
+
+[node name="4" type="PathFollow2D" parent="TopPath"]
+rotate = false
+cubic_interp = false
+loop = false
+script = ExtResource( 1 )
+move_speed = 75.0
+enemy_scene = ExtResource( 2 )
+bullet_kit = ExtResource( 3 )
+bullet_speed = 75.0
+
+[node name="5" type="PathFollow2D" parent="TopPath"]
+rotate = false
+cubic_interp = false
+loop = false
+script = ExtResource( 1 )
+move_speed = 75.0
+enemy_scene = ExtResource( 2 )
+bullet_kit = ExtResource( 3 )
+bullet_speed = 75.0
 
 [node name="BottomPath" type="Path2D" parent="."]
-position = Vector2( 256, 64 )
+position = Vector2( 192, 64 )
 curve = SubResource( 2 )
 
 [node name="1" type="PathFollow2D" parent="BottomPath"]
@@ -56,5 +96,47 @@ rotate = false
 cubic_interp = false
 loop = false
 script = ExtResource( 1 )
+move_speed = 75.0
 enemy_scene = ExtResource( 2 )
 bullet_kit = ExtResource( 3 )
+bullet_speed = 75.0
+
+[node name="2" type="PathFollow2D" parent="BottomPath"]
+rotate = false
+cubic_interp = false
+loop = false
+script = ExtResource( 1 )
+move_speed = 75.0
+enemy_scene = ExtResource( 2 )
+bullet_kit = ExtResource( 3 )
+bullet_speed = 75.0
+
+[node name="3" type="PathFollow2D" parent="BottomPath"]
+rotate = false
+cubic_interp = false
+loop = false
+script = ExtResource( 1 )
+move_speed = 75.0
+enemy_scene = ExtResource( 2 )
+bullet_kit = ExtResource( 3 )
+bullet_speed = 75.0
+
+[node name="4" type="PathFollow2D" parent="BottomPath"]
+rotate = false
+cubic_interp = false
+loop = false
+script = ExtResource( 1 )
+move_speed = 75.0
+enemy_scene = ExtResource( 2 )
+bullet_kit = ExtResource( 3 )
+bullet_speed = 75.0
+
+[node name="5" type="PathFollow2D" parent="BottomPath"]
+rotate = false
+cubic_interp = false
+loop = false
+script = ExtResource( 1 )
+move_speed = 75.0
+enemy_scene = ExtResource( 2 )
+bullet_kit = ExtResource( 3 )
+bullet_speed = 75.0

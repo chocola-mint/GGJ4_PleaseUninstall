@@ -18,6 +18,7 @@ func start_wave():
 	pass
 
 func end_wave(kill_all : bool = false):
+	if GameManager.is_game_over(): return
 	if kill_all:
 		var enemy : Enemy
 		# Kill all enemies
@@ -30,6 +31,7 @@ func end_wave(kill_all : bool = false):
 			if is_instance_valid(node):
 				enemy = node as Enemy
 				yield(node, "tree_exited")
+		GameManager.wipe_enemy_bullets()
 	emit_signal("wave_end")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

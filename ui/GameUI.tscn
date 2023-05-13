@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://ui/ui_italics.tres" type="Material" id=1]
 [ext_resource path="res://ui/ui_theme_numerics.tres" type="Theme" id=2]
@@ -7,13 +7,20 @@
 [ext_resource path="res://ui/text-bar.png" type="Texture" id=5]
 [ext_resource path="res://ui/gauge.png" type="Texture" id=6]
 [ext_resource path="res://ui/gauge-progress.png" type="Texture" id=7]
-[ext_resource path="res://ui/power_gauge.gd" type="Script" id=8]
+[ext_resource path="res://ui/gradient_gauge.gd" type="Script" id=8]
 [ext_resource path="res://ui/warning_label.gd" type="Script" id=9]
 [ext_resource path="res://ui/score_text.gd" type="Script" id=10]
+[ext_resource path="res://ui/short-gauge.png" type="Texture" id=11]
+[ext_resource path="res://ui/heart.png" type="Texture" id=12]
+[ext_resource path="res://ui/low-health.png" type="Texture" id=13]
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0.446961, 0.585221 )
 colors = PoolColorArray( 0.423529, 0.188235, 0.639216, 0.819608, 0.243137, 0.858824, 1, 0.819608 )
+
+[sub_resource type="Gradient" id=2]
+offsets = PoolRealArray( 0.216925, 0.507747, 0.76758 )
+colors = PoolColorArray( 0.639216, 0.188235, 0.188235, 0.819608, 0.992188, 0.824206, 0.320263, 0.819608, 0.340668, 1, 0.225738, 0.819608 )
 
 [node name="GameUI" type="Control"]
 anchor_left = -0.5
@@ -46,7 +53,7 @@ margin_top = 9.0
 margin_right = 75.0
 margin_bottom = 21.0
 theme = ExtResource( 3 )
-text = " Score"
+text = " SCORE"
 
 [node name="ScoreText" type="Label" parent="ZAdjust/Score"]
 unique_name_in_owner = true
@@ -118,4 +125,114 @@ margin_right = 75.0
 margin_bottom = 21.0
 theme = ExtResource( 3 )
 custom_colors/font_color = Color( 0.843137, 0.941176, 1, 1 )
-text = " Power"
+text = "POWER"
+
+[node name="Health" type="Control" parent="ZAdjust"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = 19.0
+margin_right = 95.0
+margin_bottom = 51.0
+
+[node name="Under" type="TextureRect" parent="ZAdjust/Health"]
+visible = false
+modulate = Color( 0.168627, 0.14902, 0.14902, 0.25098 )
+margin_right = 95.0
+margin_bottom = 32.0
+texture = ExtResource( 5 )
+expand = true
+
+[node name="HealthGauge" type="TextureProgress" parent="ZAdjust/Health"]
+unique_name_in_owner = true
+visible = false
+margin_left = 41.0
+margin_top = 9.0
+margin_right = 91.0
+margin_bottom = 23.0
+value = 47.0
+texture_progress = ExtResource( 7 )
+tint_progress = Color( 0.984314, 1, 0.243137, 0.819608 )
+nine_patch_stretch = true
+stretch_margin_left = 1
+stretch_margin_top = 1
+stretch_margin_right = 1
+stretch_margin_bottom = 1
+script = ExtResource( 8 )
+override_progress_gradient = SubResource( 2 )
+
+[node name="LowHealthWarning" type="Label" parent="ZAdjust/Health/HealthGauge"]
+unique_name_in_owner = true
+material = ExtResource( 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 3 )
+custom_colors/font_color = Color( 1, 0.101961, 0.101961, 1 )
+text = "DANGER!"
+align = 1
+valign = 1
+script = ExtResource( 9 )
+
+[node name="Over" type="TextureRect" parent="ZAdjust/Health"]
+visible = false
+modulate = Color( 0.168627, 0.14902, 0.14902, 0.94902 )
+margin_right = 95.0
+margin_bottom = 32.0
+texture = ExtResource( 11 )
+expand = true
+
+[node name="HealthLabel" type="Label" parent="ZAdjust/Health"]
+visible = false
+material = ExtResource( 1 )
+margin_left = 3.0
+margin_top = 9.0
+margin_right = 75.0
+margin_bottom = 21.0
+theme = ExtResource( 3 )
+custom_colors/font_color = Color( 1, 0.843137, 0.901961, 1 )
+text = "HEALTH"
+
+[node name="HealthContainer" type="HFlowContainer" parent="ZAdjust/Health"]
+unique_name_in_owner = true
+modulate = Color( 1, 1, 1, 0.807843 )
+margin_left = 1.0
+margin_top = 7.0
+margin_right = 129.0
+margin_bottom = 23.0
+custom_constants/hseparation = 1
+
+[node name="TextureRect" type="TextureRect" parent="ZAdjust/Health/HealthContainer"]
+margin_right = 16.0
+margin_bottom = 16.0
+texture = ExtResource( 12 )
+
+[node name="TextureRect2" type="TextureRect" parent="ZAdjust/Health/HealthContainer"]
+margin_left = 17.0
+margin_right = 33.0
+margin_bottom = 16.0
+texture = ExtResource( 12 )
+
+[node name="TextureRect3" type="TextureRect" parent="ZAdjust/Health/HealthContainer"]
+margin_left = 34.0
+margin_right = 50.0
+margin_bottom = 16.0
+texture = ExtResource( 12 )
+
+[node name="TextureRect4" type="TextureRect" parent="ZAdjust/Health/HealthContainer"]
+margin_left = 51.0
+margin_right = 67.0
+margin_bottom = 16.0
+texture = ExtResource( 12 )
+
+[node name="TextureRect5" type="TextureRect" parent="ZAdjust/Health/HealthContainer"]
+margin_left = 68.0
+margin_right = 84.0
+margin_bottom = 16.0
+texture = ExtResource( 12 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="ZAdjust/Health"]
+
+[node name="LowHealthVignette" type="TextureRect" parent="ZAdjust/Health/CanvasLayer"]
+unique_name_in_owner = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 13 )

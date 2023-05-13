@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://bullet_hell/purple_basic_bullet.png" type="Texture" id=1]
 [ext_resource path="res://player/player.gd" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://player/hurtbox_highlight.gd" type="Script" id=5]
 [ext_resource path="res://third_party/kenney/particlePack/smoke_04.png" type="Texture" id=6]
 [ext_resource path="res://common/Stats.tscn" type="PackedScene" id=7]
+[ext_resource path="res://third_party/kenney/particlePack/magic_05.png" type="Texture" id=8]
 
 [sub_resource type="Curve" id=16]
 min_value = 1.0
@@ -51,6 +52,18 @@ _data = [ Vector2( 0, 0.99664 ), 0.0, -0.073335, 0, 0, Vector2( 1, 0 ), -0.29175
 offsets = PoolRealArray( 0.00243013, 1 )
 colors = PoolColorArray( 1, 0.576997, 0.0421941, 1, 1, 1, 1, 0 )
 
+[sub_resource type="CanvasItemMaterial" id=18]
+blend_mode = 1
+
+[sub_resource type="Curve" id=19]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.203905, 0.579928 ), 2.8, 0.0, 0, 0 ]
+
+[sub_resource type="Curve" id=20]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -2.51435, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=21]
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
+
 [node name="Player" type="Node2D"]
 script = ExtResource( 2 )
 weapon_count_cost_multiplier = SubResource( 16 )
@@ -67,7 +80,6 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 position = Vector2( 0, -8 )
 frames = SubResource( 4 )
-frame = 1
 playing = true
 
 [node name="Hurtbox" type="Area2D" parent="Body"]
@@ -111,6 +123,31 @@ angle_random = 1.0
 scale_amount = 0.01
 scale_amount_curve = SubResource( 14 )
 color_ramp = SubResource( 15 )
+
+[node name="DeathParticles" type="CPUParticles2D" parent="Body"]
+unique_name_in_owner = true
+material = SubResource( 18 )
+emitting = false
+amount = 40
+one_shot = true
+explosiveness = 1.0
+randomness = 0.17
+texture = ExtResource( 8 )
+emission_shape = 1
+emission_sphere_radius = 1.0
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 200.0
+orbit_velocity_random = 0.14
+orbit_velocity_curve = SubResource( 19 )
+damping = 81.34
+angle = 720.0
+angle_random = 1.0
+scale_amount = 0.1
+scale_amount_random = 0.09
+scale_amount_curve = SubResource( 20 )
+color = Color( 1, 0.54902, 0.694118, 0.427451 )
+color_ramp = SubResource( 21 )
 
 [connection signal="area_shape_entered" from="Body/Hurtbox" to="." method="_on_area_shape_entered"]
 [connection signal="on_zero_health" from="Body/Stats" to="." method="_on_zero_health"]

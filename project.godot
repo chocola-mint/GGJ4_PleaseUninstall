@@ -14,6 +14,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://autoscroll_parallax.gd"
 }, {
+"base": "CanvasLayer",
+"class": "Banner",
+"language": "GDScript",
+"path": "res://ui/banner.gd"
+}, {
 "base": "Resource",
 "class": "BasicBulletKit",
 "language": "NativeScript",
@@ -70,14 +75,24 @@ _global_script_classes=[ {
 "path": "res://game.gd"
 }, {
 "base": "Node",
-"class": "GameUI",
+"class": "GameManagerUI",
 "language": "GDScript",
 "path": "res://ui/game_ui.gd"
+}, {
+"base": "CanvasLayer",
+"class": "GameOverOverlay",
+"language": "GDScript",
+"path": "res://game_over/game_over_overlay.gd"
 }, {
 "base": "Node2D",
 "class": "Level",
 "language": "GDScript",
 "path": "res://ingame/level.gd"
+}, {
+"base": "PathFollow2D",
+"class": "PathFollowEnemyController",
+"language": "GDScript",
+"path": "res://ingame/path_follow_enemy_controller.gd"
 }, {
 "base": "Node2D",
 "class": "Player",
@@ -109,6 +124,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/native_bullets/utils/timed_rotator.gd"
 }, {
+"base": "Control",
+"class": "Title",
+"language": "GDScript",
+"path": "res://title.gd"
+}, {
 "base": "Label",
 "class": "WarningLabel",
 "language": "GDScript",
@@ -126,6 +146,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "AutoscrollParallax": "",
+"Banner": "",
 "BasicBulletKit": "res://addons/native_bullets/icons/icon_bullet_kit.svg",
 "BulletKit": "res://addons/native_bullets/icons/icon_bullet_kit.svg",
 "Bullets": "res://addons/native_bullets/icons/icon_bullets.svg",
@@ -137,14 +158,17 @@ _global_script_class_icons={
 "FollowingBulletKit": "res://addons/native_bullets/icons/icon_bullet_kit.svg",
 "FollowingDynamicBulletKit": "res://addons/native_bullets/icons/icon_bullet_kit.svg",
 "Game": "",
-"GameUI": "",
+"GameManagerUI": "",
+"GameOverOverlay": "",
 "Level": "",
+"PathFollowEnemyController": "",
 "Player": "",
 "PlayerStats": "",
 "ScoreText": "",
 "SpriteUtils": "",
 "TimedEvents": "res://addons/native_bullets/icons/icon_timed_events.svg",
 "TimedRotator": "res://addons/native_bullets/icons/icon_timed_rotator.svg",
+"Title": "",
 "WarningLabel": "",
 "Wave": "",
 "Weapon": ""
@@ -224,6 +248,12 @@ focus={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777237,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":4,"pressure":0.0,"pressed":false,"script":null)
+ ]
+}
+restart={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":82,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":10,"pressure":0.0,"pressed":false,"script":null)
  ]
 }
 

@@ -6,7 +6,10 @@ extends Node
 
 var score = 0
 var player : Player
+var difficulty_multiplier = 1.0
 onready var target : Node2D = Node2D.new()
+onready var bullet_dust : PackedScene = preload("res://bullet_hell/BulletDust.tscn")
+onready var not_first_play = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -30,3 +33,35 @@ func update_nearest_enemy():
 			closest_dist = dist
 			closest_pos = enemy.global_position
 	target.position = closest_pos
+
+func wipe_enemy_bullets():
+	var col_shape = CollisionShape2D.new()
+	var rect = RectangleShape2D.new()
+	rect.extents = Vector2(160, 90)
+	col_shape.shape = rect
+	var area = Area2D.new()
+	area.collision_layer = 1
+	area.add_child(col_shape)
+	area.connect("area_shape_entered", self, "_on_area_shape_entered")
+	add_child(area)
+	yield(get_tree().create_timer(1.0), "timeout")
+	area.disconnect("area_shape_entered", self, "_on_area_shape_entered")
+	area.queue_free()
+
+func _on_area_shape_entered(area_id, _area : Area2D, area_shape, _local_shape):
+	if not Bullets.is_bullet_existing(area_id, area_shape):
+		# The colliding area is not a bullet, returning.
+		return
+	var bullet_id = Bullets.get_bullet_from_shape(area_id, area_shape)
+	add_bullet_dust(bullet_dust, bullet_id)
+	Bullets.call_deferred("release_bullet", bullet_id)
+
+func is_game_over(): return player.stats.is_zero_health()
+
+func add_bullet_dust(dust_scene : PackedScene, bullet_id):
+	var dust : CPUParticles2D = dust_scene.instance()
+	var trans : Transform2D = Bullets.get_bullet_property(bullet_id, "transform")
+	add_child(dust)
+	dust.transform = trans
+	dust.restart()
+

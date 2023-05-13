@@ -22,15 +22,23 @@ func _spawn_bullet():
 			"velocity": Vector2(bullet_speed * 0.45, 0),
 			"lifetime": 10.0,
 			"data": {
-				"damage": 1.0
+				"damage": missile_kit.data.damage
 			}
 		})
 	else:
 		Bullets.spawn_bullet(bullet_kit, {
-			"transform": shoot_anchor.global_transform,
+			"transform": shoot_anchor.global_transform.translated(Vector2(0, 5)),
 			"velocity": Vector2(bullet_speed, 0),
 			"lifetime": 10.0,
 			"data": {
-				"damage": 1.0
+				"damage": bullet_kit.data.damage
+			}
+		})
+		Bullets.spawn_bullet(bullet_kit, {
+			"transform": shoot_anchor.global_transform.translated(Vector2(0, -5)),
+			"velocity": Vector2(bullet_speed, 0),
+			"lifetime": 10.0,
+			"data": {
+				"damage": bullet_kit.data.damage
 			}
 		})
