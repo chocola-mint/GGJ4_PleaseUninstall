@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://ingame/path_follow_enemy_controller.gd" type="Script" id=1]
-[ext_resource path="res://enemies/UfoSmall.tscn" type="PackedScene" id=2]
+[ext_resource path="res://enemies/PatrolPrism.tscn" type="PackedScene" id=2]
 [ext_resource path="res://bullet_hell/enemy_bullet_red.tres" type="Resource" id=3]
 
 [sub_resource type="GDScript" id=1]

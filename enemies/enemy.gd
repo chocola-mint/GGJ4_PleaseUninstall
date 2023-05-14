@@ -14,16 +14,21 @@ onready var hitbox_shape : CollisionShape2D = $"%HitboxShape"
 onready var hurtbox_shape : CollisionShape2D = $"%HurtboxShape"
 onready var bullet_spawner : BulletsSpawner = $"%BulletsSpawner"
 var score_yield_on_hit = 10
+var prev_pos : Vector2
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	prev_pos = global_position
 	add_to_group("enemies")
-	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	_cleanup_tick()
+	if global_position.x - prev_pos.x > 0:
+		$"Body/AnimatedSprite".scale = Vector2(-1, 1)
+	elif global_position.x - prev_pos.x < 0: $"Body/AnimatedSprite".scale = Vector2(1, 1)
+	prev_pos = global_position
 
 onready var enable_cleanup : bool = false
 func _cleanup_tick():
@@ -51,6 +56,7 @@ func _on_area_shape_entered(area_id, _area, area_shape, _local_shape):
 
 var _flash_tween : SceneTreeTween = null
 func handle_hurt(damage : float):
+	AudioUtils.play_one_shot(preload("res://sound/enemy_hit.wav"), global_position)
 	GameManager.score += score_yield_on_hit 
 	stats.inflict_damage(damage)
 	if stats.is_zero_health():

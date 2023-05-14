@@ -16,29 +16,6 @@ func _ready():
 
 func _spawn_bullet():
 	if Input.is_action_pressed("focus"):
-		Bullets.spawn_bullet(missile_kit, {
-			"target_node": GameManager.target,
-			"transform": shoot_anchor.global_transform,
-			"velocity": Vector2(bullet_speed * 0.45, 0),
-			"lifetime": 10.0,
-			"data": {
-				"damage": missile_kit.data.damage
-			}
-		})
+		pass
 	else:
-		Bullets.spawn_bullet(bullet_kit, {
-			"transform": shoot_anchor.global_transform.translated(Vector2(0, 5)),
-			"velocity": Vector2(bullet_speed, 0),
-			"lifetime": 10.0,
-			"data": {
-				"damage": bullet_kit.data.damage
-			}
-		})
-		Bullets.spawn_bullet(bullet_kit, {
-			"transform": shoot_anchor.global_transform.translated(Vector2(0, -5)),
-			"velocity": Vector2(bullet_speed, 0),
-			"lifetime": 10.0,
-			"data": {
-				"damage": bullet_kit.data.damage
-			}
-		})
+		pass

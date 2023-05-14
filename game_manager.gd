@@ -10,10 +10,12 @@ var difficulty_multiplier = 1.0
 onready var target : Node2D = Node2D.new()
 onready var bullet_dust : PackedScene = preload("res://bullet_hell/BulletDust.tscn")
 onready var not_first_play = false
+onready var audio_stream_player : AudioStreamPlayer = AudioStreamPlayer.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	get_tree().root.call_deferred("add_child", target)
+	add_child(audio_stream_player)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -65,3 +67,12 @@ func add_bullet_dust(dust_scene : PackedScene, bullet_id):
 	dust.transform = trans
 	dust.restart()
 
+func play_music(stream : AudioStream):
+	audio_stream_player.stream = stream
+	audio_stream_player.volume_db = 0
+	audio_stream_player.play()
+
+func fade_music(duration : float = 1.0) -> SceneTreeTween:
+	var tween = audio_stream_player.create_tween()
+	tween.tween_property(audio_stream_player, "volume_db", -40, duration)
+	return tween

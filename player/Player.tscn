@@ -11,8 +11,8 @@
 
 [sub_resource type="Curve" id=16]
 min_value = 1.0
-max_value = 30.0
-_data = [ Vector2( 0, 1 ), 0.0, 83.6608, 0, 0, Vector2( 1, 30 ), 0.0, 0.0, 0, 0 ]
+max_value = 60.0
+_data = [ Vector2( 0, 1 ), 0.0, 103.345, 0, 0, Vector2( 0.327044, 16.4144 ), 35.8287, 35.8287, 0, 0, Vector2( 0.509434, 37.6757 ), 49.5424, 49.5424, 0, 0, Vector2( 1, 30 ), 0.0, 0.0, 0, 0 ]
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 4 )

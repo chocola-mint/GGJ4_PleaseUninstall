@@ -35,7 +35,8 @@ func exec_script():
 	tween.set_loops()
 	tween.tween_callback(self, "_shoot").set_delay(1.5)
 func _shoot():
-	enemy.bullet_spawner.shoot(0, 10.0, GameManager.player.body)
+#	enemy.bullet_spawner.shoot(0, 10.0, GameManager.player.body)
+	pass
 func _pass():
 	pass
 # Called every frame. 'delta' is the elapsed time since the previous frame.

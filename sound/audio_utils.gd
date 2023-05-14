@@ -14,7 +14,6 @@ class InstancedAudioPlayer extends AudioStreamPlayer2D:
 	func _cleanup():
 		queue_free()
 # Plays the given audio stream at the given global position 
-# Default position is center of the screen
 func play_one_shot(audio_stream : AudioStream, global_position = Vector2.ZERO):
 	var instance = InstancedAudioPlayer.new()
 	get_tree().root.add_child(instance)
@@ -22,3 +21,5 @@ func play_one_shot(audio_stream : AudioStream, global_position = Vector2.ZERO):
 	instance.stream = audio_stream
 	instance.play()
 
+func play_one_shot_1d(audio_stream : AudioStream):
+	play_one_shot(audio_stream, get_viewport().get_visible_rect().get_center())

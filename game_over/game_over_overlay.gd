@@ -17,6 +17,8 @@ func _ready():
 	tween.set_ease(Tween.EASE_OUT)
 	tween.set_trans(Tween.TRANS_QUAD)
 	tween.tween_property(control, "modulate:a", 0.8, 1.0)
+	tween = GameManager.fade_music(0.5)
+	tween.tween_callback(GameManager, "play_music", [preload("res://sound/10 - The Empire.ogg")])
 	pass # Replace with function body.
 
 
@@ -26,6 +28,7 @@ func _process(delta):
 	score_label.snap_to_value(GameManager.score)
 	if Input.is_action_just_pressed("restart"):
 		disabled = true
+		var _tween = GameManager.fade_music(0.5)
 		emit_signal("restart")
 
 var disabled = false

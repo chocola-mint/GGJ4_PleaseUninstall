@@ -106,8 +106,9 @@ var hurt_invul_active = false
 func handle_hurt(damage : float):
 	if hurt_invul_active or damage <= 0: return
 	hurt_invul_active = true
+	AudioUtils.play_one_shot(preload("res://sound/player_hit.wav"), global_position)
 	stats.inflict_damage(damage)
-	var _tween = SpriteUtils.flash(animated_sprite, 2)
+	var _tween = SpriteUtils.flash(animated_sprite, 4)
 	_tween = create_tween().tween_callback(self, 
 	"_turn_off_hurt_invul").set_delay(0.5)
 func _turn_off_hurt_invul(): hurt_invul_active = false
@@ -121,16 +122,27 @@ func uninstall_all_weapons(delay : float = 0.0):
 		else: weapon.uninstall()
 
 func _on_zero_health():
+	# SFX
+	AudioUtils.play_one_shot(preload("res://sound/Death  New.wav"), global_position)
+	
+	# Particles
 	for i in range(0, 3):
 		var copy : CPUParticles2D = $"%DeathParticles".duplicate()
 		add_child(copy)
 		copy.global_position = body.global_position
 		copy.amount += int(round(5.0 * pow(i, 1.5)))
 		copy.create_tween().tween_callback(copy, "restart").set_delay(pow(i, 1.5) * 0.2)
+	
+	# Hurtbox
 	hurtbox_shape.set_deferred("disabled", true)
 	hurtbox_highlight.visible = false
+	
+	# Disable trail particles
 	trail_particles.emitting = false
+	
+	# Weapons
 	uninstall_all_weapons(0.1)
+	
 	# Fade
 	var tween = create_tween()
 	tween.set_ease(Tween.EASE_IN_OUT)

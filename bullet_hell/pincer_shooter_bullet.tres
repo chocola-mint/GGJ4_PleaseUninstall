@@ -1,23 +1,16 @@
-[gd_resource type="Resource" load_steps=5 format=2]
+[gd_resource type="Resource" load_steps=2 format=2]
 
 [ext_resource path="res://addons/native_bullets/kits/basic_bullet_kit.gdns" type="Script" id=1]
-[ext_resource path="res://bullet_hell/basic_bullet_shape.tres" type="Shape2D" id=2]
-[ext_resource path="res://bullet_hell/bullet_material.tres" type="Material" id=3]
-[ext_resource path="res://bullet_hell/blue_blade.png" type="Texture" id=4]
 
 [resource]
 script = ExtResource( 1 )
-texture = ExtResource( 4 )
 bullet_class_name = "Bullet"
-material = ExtResource( 3 )
 collisions_enabled = true
-collision_layer = 2
-collision_mask = 4
-collision_shape = ExtResource( 2 )
-use_viewport_as_active_rect = false
-active_rect = Rect2( -320, -180, 640, 360 )
-rotate = true
+collision_layer = 0
+collision_mask = 0
+use_viewport_as_active_rect = true
+active_rect = Rect2( 0, 0, 0, 0 )
+rotate = false
 unique_modulate_component = 0
 data = {
-"damage": 4.0
 }

@@ -7,12 +7,14 @@ reloadable=true
 
 [entry]
 
+HTML5.web="res://addons/native_bullets/bin/libbullets.wasm"
 OSX.64="res://addons/native_bullets/bin/macos/libbullets.dylib"
 Windows.64="res://addons/native_bullets/bin/win64/bullets.dll"
 X11.64="res://addons/native_bullets/bin/x11/libbullets.so"
 
 [dependencies]
 
+HTML5.web=[  ]
 OSX.64=[  ]
 Windows.64=[  ]
 X11.64=[  ]

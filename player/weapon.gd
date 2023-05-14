@@ -70,20 +70,27 @@ func shoot_dud():
 	else: return false
 	
 func _spawn_bullet():
-	Bullets.spawn_bullet(bullet_kit, {
-		"transform": shoot_anchor.global_transform,
-		"velocity": Vector2(bullet_speed, 0),
-		"lifetime": 10.0,
-		"data": {
-			"damage": bullet_kit.data.damage
-		}
-	})
-
+	
+#	Bullets.spawn_bullet(bullet_kit, {
+#		"transform": shoot_anchor.global_transform,
+#		"velocity": Vector2(bullet_speed, 0),
+#		"lifetime": 10.0,
+#		"data": {
+#			"damage": bullet_kit.data.damage
+#		}
+#	})
+	pass
 func can_shoot(): 
 	return time - last_shoot_time > cooldown and _is_ready and not _uninstalling
 var _uninstalling = false
 func uninstall():
 	if _uninstalling: return
+	get_parent().call_deferred("remove_child", self)
+	get_tree().root.call_deferred("add_child", self)
+	self.call_deferred("set_global_position", global_position)
+#	get_parent().remove_child(self)
+#	get_tree().root.add_child(self)
+	AudioUtils.play_one_shot(preload("res://sound/weapon_explode.wav"), global_position)
 	_uninstalling = true
 	hitbox_shape.set_deferred("disabled", false)
 	var viewport_rect = get_viewport_rect()

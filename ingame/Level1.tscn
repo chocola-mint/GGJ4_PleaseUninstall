@@ -18,6 +18,7 @@ onready var weapon_list_t0 = [
 signal skip
 
 func _level_script():
+	GameManager.play_music(preload(\"res://sound/8bit-OnTheOffensiveV2.wav\"))
 	yield(get_tree().create_timer(1.0), \"timeout\")
 	if not GameManager.not_first_play:
 		banner.title.text = \"Tutorial\"
@@ -29,28 +30,23 @@ func _level_script():
 	GameManager.player.add_weapon(weapon_list_t0[0])
 	# No bonus for tutorial wave
 	print(\"tutorial wave end\")
-	
 	banner.title.text = \"Mission Start!\"
 	banner.subtitle.visible = false
 	banner.show(1.0)
-	yield(_handle_wave(preload(\"res://ingame/Wave1-1.tscn\")), \"completed\")
-	_give_wave_bonus()
-	print(\"wave 1-1 end\")
 	
-	banner.title.text = \"Wave 1 Cleared\"
-	banner.subtitle.visible = false
-	banner.show(1.0)
-	yield(get_tree().create_timer(2.0), \"timeout\")
-	yield(_handle_wave(preload(\"res://ingame/Wave1-2.tscn\")), \"completed\")
-	_give_wave_bonus()
-	print(\"wave 1-2 end\")
-	banner.title.text = \"Wave 2 Cleared\"
-	banner.subtitle.visible = false
-	banner.show(1.0)
-	yield(get_tree().create_timer(2.0), \"timeout\")
+	yield(_generic_wave(preload(\"res://ingame/Wave1-1.tscn\"), 1), \"completed\")
+	yield(_generic_wave(preload(\"res://ingame/Wave1-2.tscn\"), 2), \"completed\")
+	yield(_generic_wave(preload(\"res://ingame/Wave1-3.tscn\"), 3), \"completed\")
+	
 	
 	_mark_level_end()
-	
+func _generic_wave(wave_scene : PackedScene, wave_number : int):
+	yield(_handle_wave(wave_scene), \"completed\")
+	_give_wave_bonus()
+	banner.title.text = \"Wave \" + str(wave_number) + \" Cleared\"
+	banner.subtitle.visible = false
+	banner.show(1.0)
+	yield(get_tree().create_timer(2.0), \"timeout\")
 
 func _give_wave_bonus():
 	var weapon_count = GameManager.player.weapons.get_child_count()

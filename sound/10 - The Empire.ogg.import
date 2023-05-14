@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/10 - The Empire.ogg-dae8c86350e6b215aaa179a4d9aaa5f3.oggstr"
+
+[deps]
+
+source_file="res://sound/10 - The Empire.ogg"
+dest_files=[ "res://.import/10 - The Empire.ogg-dae8c86350e6b215aaa179a4d9aaa5f3.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

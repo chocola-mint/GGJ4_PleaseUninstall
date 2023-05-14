@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://bullet_hell/enemy_bullet_red.tres" type="Resource" id=1]
-[ext_resource path="res://enemies/UfoSmall.tscn" type="PackedScene" id=2]
+[ext_resource path="res://enemies/PatrolPrism.tscn" type="PackedScene" id=2]
+[ext_resource path="res://bullet_hell/enemy_bullet_blue.tres" type="Resource" id=3]
 
 [sub_resource type="GDScript" id=2]
 script/source = "extends Wave
@@ -133,7 +134,7 @@ loop = false
 script = SubResource( 3 )
 move_speed = 75.0
 enemy_scene = ExtResource( 2 )
-bullet_kit = ExtResource( 1 )
+bullet_kit = ExtResource( 3 )
 bullet_speed = 100.0
 
 [node name="2" type="PathFollow2D" parent="DownTop"]
@@ -144,7 +145,7 @@ loop = false
 script = SubResource( 3 )
 move_speed = 75.0
 enemy_scene = ExtResource( 2 )
-bullet_kit = ExtResource( 1 )
+bullet_kit = ExtResource( 3 )
 bullet_speed = 100.0
 
 [node name="3" type="PathFollow2D" parent="DownTop"]
@@ -155,7 +156,7 @@ loop = false
 script = SubResource( 3 )
 move_speed = 75.0
 enemy_scene = ExtResource( 2 )
-bullet_kit = ExtResource( 1 )
+bullet_kit = ExtResource( 3 )
 bullet_speed = 100.0
 
 [node name="4" type="PathFollow2D" parent="DownTop"]
@@ -166,7 +167,7 @@ loop = false
 script = SubResource( 3 )
 move_speed = 75.0
 enemy_scene = ExtResource( 2 )
-bullet_kit = ExtResource( 1 )
+bullet_kit = ExtResource( 3 )
 bullet_speed = 100.0
 
 [node name="5" type="PathFollow2D" parent="DownTop"]
@@ -177,5 +178,5 @@ loop = false
 script = SubResource( 3 )
 move_speed = 75.0
 enemy_scene = ExtResource( 2 )
-bullet_kit = ExtResource( 1 )
+bullet_kit = ExtResource( 3 )
 bullet_speed = 100.0

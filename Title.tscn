@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://common/alpha_cutoff_material.tres" type="Material" id=1]
 [ext_resource path="res://title-no-text.png" type="Texture" id=2]
 [ext_resource path="res://title-text.png" type="Texture" id=3]
 [ext_resource path="res://ui/ui_outlined.tres" type="Theme" id=4]
 [ext_resource path="res://title.gd" type="Script" id=5]
+[ext_resource path="res://sound/Theme Song 8-bit V1 _looping.wav" type="AudioStream" id=6]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends TextureRect
@@ -58,6 +59,7 @@ func _input(event):
 	if visible:
 		if event is InputEventKey or event is InputEventJoypadButton:
 			visible = false
+			AudioUtils.play_one_shot_1d(preload(\"res://sound/positive.wav\"))
 			var tween = title_cg.create_tween()
 			tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
 			tween.tween_property(title_cg, \"modulate\", Color(0.6, 0.6, 0.6), 1.0)
@@ -112,3 +114,8 @@ text = "Press Any Button"
 align = 1
 valign = 1
 script = SubResource( 2 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource( 6 )
+autoplay = true
