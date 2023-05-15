@@ -22,6 +22,7 @@ func show(duration: float = 3.0):
 		active_tween.stop()
 	active_tween = create_tween()
 	show_direction = 1
+# warning-ignore:return_value_discarded
 	active_tween.tween_callback(self, "_set_show_direction", [-1]).set_delay(duration)
 
 func _set_show_direction(dir : int):

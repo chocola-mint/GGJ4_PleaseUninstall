@@ -6,8 +6,6 @@ export(float, 0, 200) var move_speed = 120.0
 export(Curve) var weapon_count_cost_multiplier : Curve
 export(int, 1, 10) var weapon_count_cost_limit = 4
 
-signal game_over
-
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -84,23 +82,10 @@ func _get_move_speed():
 	if Input.is_action_pressed("focus"): return move_speed / 2.0
 	else: return move_speed
 
-func _on_area_shape_entered(area_id, _area, area_shape, _local_shape):
-	if not Bullets.is_bullet_existing(area_id, area_shape):
-		# The colliding area is not a bullet, returning.
-		return
-	# Get a BulletID from the area_shape passed in by the engine.
-	var bullet_id = Bullets.get_bullet_from_shape(area_id, area_shape)
-	GameManager.add_bullet_dust(preload("res://bullet_hell/BulletDust.tscn"), bullet_id)
-	# Get bullet properties, transform, velocity, lifetime etc.
-#	var bullet_transform : Transform2D = Bullets.get_bullet_property(bullet_id, "transform")
-	# custom data: damage
-#	var bullet_damage : float = Bullets.get_bullet_property(bullet_id, "data").damage
-	var bullet_damage = 1
-	# You can also retrieve the BulletKit that generated the bullet and get/set its properties.
-#	var kit_collision_shape = Bullets.get_kit_from_bullet(bullet_id).collision_shape
-	# Remove the bullet, call_deferred is necessary because the Physics2DServer is in its flushing state during callbacks.
-	Bullets.call_deferred("release_bullet", bullet_id)
-	handle_hurt(bullet_damage)
+func _on_area_shape_entered(_area_id, area : Area2D, _area_shape, _local_shape):
+	var bullet_damage : float = area.get_meta(Meta.damage, -1.0)
+	if bullet_damage >= 0:
+		handle_hurt(bullet_damage)
 
 var hurt_invul_active = false
 func handle_hurt(damage : float):
@@ -131,6 +116,7 @@ func _on_zero_health():
 		add_child(copy)
 		copy.global_position = body.global_position
 		copy.amount += int(round(5.0 * pow(i, 1.5)))
+# warning-ignore:return_value_discarded
 		copy.create_tween().tween_callback(copy, "restart").set_delay(pow(i, 1.5) * 0.2)
 	
 	# Hurtbox

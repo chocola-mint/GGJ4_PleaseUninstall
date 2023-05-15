@@ -37,6 +37,7 @@ func update_nearest_enemy():
 	target.position = closest_pos
 
 func wipe_enemy_bullets():
+	# TODO: Register enemy bullet types
 	var col_shape = CollisionShape2D.new()
 	var rect = RectangleShape2D.new()
 	rect.extents = Vector2(160, 90)

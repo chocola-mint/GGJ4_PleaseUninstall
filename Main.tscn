@@ -46,6 +46,7 @@ func enter():
 		tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
 		tween.tween_callback(self, \"_pass\").set_delay(rand_range(0.1, 0.2))
 		tween.tween_property(rect, \"rect_scale\", Vector2.ZERO, delay)
+# warning-ignore:return_value_discarded
 	create_tween().tween_callback(self, \"set_visible\", [false]).set_delay(1.0)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

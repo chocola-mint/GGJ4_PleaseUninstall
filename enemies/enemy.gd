@@ -36,23 +36,26 @@ func _cleanup_tick():
 		if not (death_particles.emitting):
 			queue_free()
 
-func _on_area_shape_entered(area_id, _area, area_shape, _local_shape):
-	if not Bullets.is_bullet_existing(area_id, area_shape):
-		# The colliding area is not a bullet, returning.
-		return
-	# Get a BulletID from the area_shape passed in by the engine.
-	var bullet_id = Bullets.get_bullet_from_shape(area_id, area_shape)
-	# Get bullet properties, transform, velocity, lifetime etc.
-#	var bullet_transform : Transform2D = Bullets.get_bullet_property(bullet_id, "transform")
-	# custom data: damage
-	var data = Bullets.get_bullet_property(bullet_id, "data")
-	var bullet_damage : float = 1
-	if data: bullet_damage = data.damage
-	# You can also retrieve the BulletKit that generated the bullet and get/set its properties.
-#	var kit_collision_shape = Bullets.get_kit_from_bullet(bullet_id).collision_shape
-	# Remove the bullet, call_deferred is necessary because the Physics2DServer is in its flushing state during callbacks.
-	Bullets.call_deferred("release_bullet", bullet_id)
-	handle_hurt(bullet_damage)
+func _on_area_shape_entered(_area_id, area : Area2D, _area_shape, _local_shape):
+	var bullet_damage : float = area.get_meta(Meta.damage, -1.0)
+	if bullet_damage >= 0:
+		handle_hurt(bullet_damage)
+#	if not Bullets.is_bullet_existing(area_id, area_shape):
+#		# The colliding area is not a bullet, returning.
+#		return
+#	# Get a BulletID from the area_shape passed in by the engine.
+#	var bullet_id = Bullets.get_bullet_from_shape(area_id, area_shape)
+#	# Get bullet properties, transform, velocity, lifetime etc.
+##	var bullet_transform : Transform2D = Bullets.get_bullet_property(bullet_id, "transform")
+#	# custom data: damage
+#	var data = Bullets.get_bullet_property(bullet_id, "data")
+#	var bullet_damage : float = 1
+#	if data: bullet_damage = data.damage
+#	# You can also retrieve the BulletKit that generated the bullet and get/set its properties.
+##	var kit_collision_shape = Bullets.get_kit_from_bullet(bullet_id).collision_shape
+#	# Remove the bullet, call_deferred is necessary because the Physics2DServer is in its flushing state during callbacks.
+#	Bullets.call_deferred("release_bullet", bullet_id)
+#	handle_hurt(bullet_damage)
 
 var _flash_tween : SceneTreeTween = null
 func handle_hurt(damage : float):

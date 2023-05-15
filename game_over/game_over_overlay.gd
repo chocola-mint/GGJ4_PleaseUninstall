@@ -23,7 +23,7 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	if disabled: return
 	score_label.snap_to_value(GameManager.score)
 	if Input.is_action_just_pressed("restart"):

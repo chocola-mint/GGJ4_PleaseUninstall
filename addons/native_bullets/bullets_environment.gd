@@ -36,9 +36,7 @@ func _ready():
 #			parents[i] = null
 #		i += 1
 	if current and is_instance_valid(Bullets):
-		print("Mounting")
 		Bullets.mount(self)
-		print("Mounted")
 
 func _exit_tree():
 	if Engine.editor_hint:

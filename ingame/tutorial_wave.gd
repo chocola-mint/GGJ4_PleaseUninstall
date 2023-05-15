@@ -76,11 +76,13 @@ func start_wave():
 	_sfx_positive()
 	arrow.set_global_position(Vector2(85, 10))
 	arrow_label.text = "Try letting all of your weapons collide with this UFO."
+# warning-ignore:return_value_discarded
 	dummy.create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD).tween_property(dummy, "global_position:y", 0, 1.0)
 	hint.visible = false
 	yield(self, "no_weapons")
 	hint.visible = true
 	arrow.set_global_position(Vector2(105, 80))
+# warning-ignore:return_value_discarded
 	dummy.create_tween().tween_property(dummy, "global_position:y", -135, 0.5)
 	arrow_label.text = "Sometimes, less is more."
 	yield(self, "next")

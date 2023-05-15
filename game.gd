@@ -35,7 +35,8 @@ func _start_level(idx : int):
 func _load_game_over_overlay():
 	var goo : GameOverOverlay = preload("res://game_over/GameOverOverlay.tscn").instance()
 	add_child(goo)
-	goo.connect("restart", self, "restart")
+	var err = goo.connect("restart", self, "restart")
+	assert(not err)
 
 func restart():
 	GameManager.not_first_play = true

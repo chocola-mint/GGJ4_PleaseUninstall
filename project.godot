@@ -30,6 +30,11 @@ _global_script_classes=[ {
 "path": "res://addons/native_bullets/bullet_kit.gdns"
 }, {
 "base": "Node2D",
+"class": "BulletType",
+"language": "GDScript",
+"path": "res://bullet_hell/bullet_type.gd"
+}, {
+"base": "Node2D",
 "class": "Bullets",
 "language": "NativeScript",
 "path": "res://addons/native_bullets/bullets.gdns"
@@ -104,6 +109,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://common/player_stats.gd"
 }, {
+"base": "Area2D",
+"class": "PooledBullet",
+"language": "GDScript",
+"path": "res://bullet_hell/pooled_bullet.gd"
+}, {
 "base": "Label",
 "class": "ScoreText",
 "language": "GDScript",
@@ -149,6 +159,7 @@ _global_script_class_icons={
 "Banner": "",
 "BasicBulletKit": "res://addons/native_bullets/icons/icon_bullet_kit.svg",
 "BulletKit": "res://addons/native_bullets/icons/icon_bullet_kit.svg",
+"BulletType": "",
 "Bullets": "res://addons/native_bullets/icons/icon_bullets.svg",
 "BulletsEnvironment": "res://addons/native_bullets/icons/icon_bullets_environment.svg",
 "BulletsSpawner": "res://addons/native_bullets/icons/icon_bullet_properties.svg",
@@ -164,6 +175,7 @@ _global_script_class_icons={
 "PathFollowEnemyController": "",
 "Player": "",
 "PlayerStats": "",
+"PooledBullet": "",
 "ScoreText": "",
 "SpriteUtils": "",
 "TimedEvents": "res://addons/native_bullets/icons/icon_timed_events.svg",
@@ -185,6 +197,9 @@ config/icon="res://icon.png"
 Bullets="*res://addons/native_bullets/bullets.gdns"
 GameManager="*res://game_manager.gd"
 AudioUtils="*res://sound/audio_utils.gd"
+BulletPincerMain="*res://bullet_hell/BulletPincerMain.tscn"
+BulletPincerSub="*res://bullet_hell/BulletPincerSub.tscn"
+Meta="*res://bullet_hell/meta.gd"
 
 [display]
 
