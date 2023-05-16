@@ -38,6 +38,11 @@ func _level_script():
 	yield(_generic_wave(preload(\"res://ingame/Wave1-2.tscn\"), 2), \"completed\")
 	yield(_generic_wave(preload(\"res://ingame/Wave1-3.tscn\"), 3), \"completed\")
 	
+	banner.title.text = \"Demo end\"
+	banner.subtitle.visible = false
+	banner.show(1.0)
+	yield(get_tree().create_timer(2.0), \"timeout\")
+	GameManager.player.handle_hurt(10000)
 	
 	_mark_level_end()
 func _generic_wave(wave_scene : PackedScene, wave_number : int):
