@@ -22,7 +22,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "BulletType",
 "language": "GDScript",
-"path": "res://bullet_hell/bullet_type.gd"
+"path": "res://bullet_hell/bullet_types/bullet_type.gd"
 }, {
 "base": "Node2D",
 "class": "Enemy",
@@ -72,7 +72,7 @@ _global_script_classes=[ {
 "base": "Area2D",
 "class": "PooledBullet",
 "language": "GDScript",
-"path": "res://bullet_hell/pooled_bullet.gd"
+"path": "res://bullet_hell/bullet_templates/pooled_bullet.gd"
 }, {
 "base": "Label",
 "class": "ScoreText",
@@ -136,9 +136,11 @@ config/icon="res://icon.png"
 
 GameManager="*res://game_manager.gd"
 AudioUtils="*res://sound/audio_utils.gd"
-BulletPincerMain="*res://bullet_hell/BulletPincerMain.tscn"
-BulletPincerSub="*res://bullet_hell/BulletPincerSub.tscn"
+BulletPincerMain="*res://bullet_hell/bullet_types/BulletPincerMain.tscn"
+BulletPincerSub="*res://bullet_hell/bullet_types/BulletPincerSub.tscn"
 Meta="*res://bullet_hell/meta.gd"
+BulletEnemyRedLemonA="*res://bullet_hell/bullet_types/BulletEnemyRedLemonA.tscn"
+BulletEnemyBlueLemonA="*res://bullet_hell/bullet_types/BulletEnemyBlueLemonA.tscn"
 
 [display]
 

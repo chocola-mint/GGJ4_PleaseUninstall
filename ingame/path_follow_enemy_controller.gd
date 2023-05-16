@@ -5,6 +5,7 @@ class_name PathFollowEnemyController
 export(float, 1, 1000) var move_speed = 50.0
 export(PackedScene) var enemy_scene
 export(float, 1, 1000) var bullet_speed = 150.0
+export(int, 0, 2) var bullet_id
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -31,8 +32,12 @@ func exec_script():
 	tween.set_loops()
 	tween.tween_callback(self, "_shoot").set_delay(1.5)
 func _shoot():
-#	enemy.bullet_spawner.shoot(0, 10.0, GameManager.player.body)
-	pass
+	var main_anchor = enemy.get_main_anchor()
+	[BulletEnemyRedLemonA, BulletEnemyBlueLemonA][bullet_id].spawn(
+		main_anchor.global_position,
+		(GameManager.player.body.global_position - main_anchor.global_position).normalized(),
+		bullet_speed
+	).set_meta(Meta.damage, 1)
 func _pass():
 	pass
 # Called every frame. 'delta' is the elapsed time since the previous frame.

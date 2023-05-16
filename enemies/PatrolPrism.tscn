@@ -49,7 +49,7 @@ texture = ExtResource( 1 )
 script = SubResource( 3 )
 light_gradient = SubResource( 4 )
 
-[node name="Main Anchor" type="Node2D" parent="Body/TransformAdjust/BulletsSpawner" index="0"]
+[node name="MainAnchor" type="Node2D" parent="Body/TransformAdjust/BulletsSpawner" index="0"]
 position = Vector2( 4.00004, -13 )
 
 [node name="Stats" parent="." index="1"]

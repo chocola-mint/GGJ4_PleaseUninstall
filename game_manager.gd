@@ -38,19 +38,9 @@ func update_nearest_enemy():
 
 func wipe_enemy_bullets():
 	# TODO: Register enemy bullet types
-	var col_shape = CollisionShape2D.new()
-	var rect = RectangleShape2D.new()
-	rect.extents = Vector2(160, 90)
-	col_shape.shape = rect
-	var area = Area2D.new()
-	area.collision_layer = 1
-	area.add_child(col_shape)
-	area.connect("area_shape_entered", self, "_on_area_shape_entered")
-	add_child(area)
-	yield(get_tree().create_timer(1.0), "timeout")
-	area.disconnect("area_shape_entered", self, "_on_area_shape_entered")
-	area.queue_free()
-
+	for bullet_type in [BulletEnemyBlueLemonA, BulletEnemyRedLemonA]:
+		(bullet_type as BulletType).kill_all()
+	pass
 #func _on_area_shape_entered(area_id, _area : Area2D, area_shape, _local_shape):
 #	if not Bullets.is_bullet_existing(area_id, area_shape):
 #		# The colliding area is not a bullet, returning.

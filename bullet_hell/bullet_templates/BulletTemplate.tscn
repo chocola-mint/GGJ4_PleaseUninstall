@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://bullet_hell/pooled_bullet.gd" type="Script" id=1]
+[ext_resource path="res://bullet_hell/bullet_templates/pooled_bullet.gd" type="Script" id=1]
 [ext_resource path="res://bullet_hell/red_basic_bullet.png" type="Texture" id=2]
 
 [sub_resource type="AtlasTexture" id=3]
@@ -23,5 +23,6 @@ script = ExtResource( 1 )
 frames = SubResource( 2 )
 
 [node name="HitboxShape" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

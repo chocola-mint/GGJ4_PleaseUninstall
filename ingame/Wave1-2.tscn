@@ -128,6 +128,7 @@ script = SubResource( 3 )
 move_speed = 75.0
 enemy_scene = ExtResource( 2 )
 bullet_speed = 100.0
+bullet_id = 1
 
 [node name="2" type="PathFollow2D" parent="DownTop"]
 position = Vector2( 0, 128 )
@@ -138,6 +139,7 @@ script = SubResource( 3 )
 move_speed = 75.0
 enemy_scene = ExtResource( 2 )
 bullet_speed = 100.0
+bullet_id = 1
 
 [node name="3" type="PathFollow2D" parent="DownTop"]
 position = Vector2( 0, 128 )
@@ -148,6 +150,7 @@ script = SubResource( 3 )
 move_speed = 75.0
 enemy_scene = ExtResource( 2 )
 bullet_speed = 100.0
+bullet_id = 1
 
 [node name="4" type="PathFollow2D" parent="DownTop"]
 position = Vector2( 0, 128 )
@@ -158,6 +161,7 @@ script = SubResource( 3 )
 move_speed = 75.0
 enemy_scene = ExtResource( 2 )
 bullet_speed = 100.0
+bullet_id = 1
 
 [node name="5" type="PathFollow2D" parent="DownTop"]
 position = Vector2( 0, 128 )
@@ -168,3 +172,4 @@ script = SubResource( 3 )
 move_speed = 75.0
 enemy_scene = ExtResource( 2 )
 bullet_speed = 100.0
+bullet_id = 1

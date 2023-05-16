@@ -12,6 +12,7 @@ onready var death_particles : CPUParticles2D = $"%DeathParticles"
 onready var body : KinematicBody2D = $"%Body"
 onready var hitbox_shape : CollisionShape2D = $"%HitboxShape"
 onready var hurtbox_shape : CollisionShape2D = $"%HurtboxShape"
+onready var bullet_spawner : Node2D = $"%BulletsSpawner"
 var score_yield_on_hit = 10
 var prev_pos : Vector2
 
@@ -62,3 +63,6 @@ func _on_zero_health():
 	
 func _on_tree_exiting():
 	remove_from_group("enemies")
+
+func get_main_anchor() -> Node2D:
+	return bullet_spawner.get_child(0) as Node2D

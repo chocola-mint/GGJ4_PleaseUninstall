@@ -5,7 +5,7 @@ class_name BulletType
 # The scene used for each bullet.
 export(PackedScene) var bullet_template : PackedScene
 # Bullets outside this rect will be culled.
-export(Rect2) var culling_rect : Rect2 = Rect2(-160.0, -90.0, 640.0, 360.0)
+export(Rect2) var culling_rect : Rect2 = Rect2(-320.0, -180.0, 640.0, 360.0)
 # Set the initial size of the 
 export(int) var initial_pool_size : int = 10
 var POOL_EXPAND_FACTOR : float = 2.0
@@ -47,7 +47,9 @@ func _get_from_pool() -> PooledBullet:
 	while i < pool_size:
 		var bullet : PooledBullet = get_child(_pool_ptr)
 		_pool_ptr = (_pool_ptr + 1) % pool_size
-		if not bullet.is_active(): return bullet
+		if not bullet.is_active(): 
+			bullet.wake_up()
+			return bullet
 		i += 1
 	# [Expand pool]
 	# Move pool ptr to 1+end of the pool because we can guarantee
