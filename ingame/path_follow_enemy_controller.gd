@@ -4,7 +4,6 @@ class_name PathFollowEnemyController
 
 export(float, 1, 1000) var move_speed = 50.0
 export(PackedScene) var enemy_scene
-export(Resource) var bullet_kit
 export(float, 1, 1000) var bullet_speed = 150.0
 # Declare member variables here. Examples:
 # var a = 2
@@ -25,9 +24,6 @@ func start():
 	add_child(enemy)
 	var _err = enemy.stats.connect("on_zero_health", self, "disable")
 	assert(not _err)
-	enemy.bullet_spawner.bullet_kit = bullet_kit
-	enemy.bullet_spawner.bullets_speed = bullet_speed
-	enemy.bullet_spawner.enabled = true
 	exec_script()
 func disable(): enabled = false
 func exec_script():

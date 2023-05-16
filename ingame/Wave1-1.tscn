@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://ingame/path_follow_enemy_controller.gd" type="Script" id=1]
 [ext_resource path="res://enemies/PatrolPrism.tscn" type="PackedScene" id=2]
-[ext_resource path="res://bullet_hell/enemy_bullet_red.tres" type="Resource" id=3]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Wave
@@ -44,7 +43,6 @@ loop = false
 script = ExtResource( 1 )
 move_speed = 75.0
 enemy_scene = ExtResource( 2 )
-bullet_kit = ExtResource( 3 )
 bullet_speed = 75.0
 
 [node name="2" type="PathFollow2D" parent="TopPath"]
@@ -54,7 +52,6 @@ loop = false
 script = ExtResource( 1 )
 move_speed = 75.0
 enemy_scene = ExtResource( 2 )
-bullet_kit = ExtResource( 3 )
 bullet_speed = 75.0
 
 [node name="3" type="PathFollow2D" parent="TopPath"]
@@ -64,7 +61,6 @@ loop = false
 script = ExtResource( 1 )
 move_speed = 75.0
 enemy_scene = ExtResource( 2 )
-bullet_kit = ExtResource( 3 )
 bullet_speed = 75.0
 
 [node name="4" type="PathFollow2D" parent="TopPath"]
@@ -74,7 +70,6 @@ loop = false
 script = ExtResource( 1 )
 move_speed = 75.0
 enemy_scene = ExtResource( 2 )
-bullet_kit = ExtResource( 3 )
 bullet_speed = 75.0
 
 [node name="5" type="PathFollow2D" parent="TopPath"]
@@ -84,7 +79,6 @@ loop = false
 script = ExtResource( 1 )
 move_speed = 75.0
 enemy_scene = ExtResource( 2 )
-bullet_kit = ExtResource( 3 )
 bullet_speed = 75.0
 
 [node name="BottomPath" type="Path2D" parent="."]
@@ -98,7 +92,6 @@ loop = false
 script = ExtResource( 1 )
 move_speed = 75.0
 enemy_scene = ExtResource( 2 )
-bullet_kit = ExtResource( 3 )
 bullet_speed = 75.0
 
 [node name="2" type="PathFollow2D" parent="BottomPath"]
@@ -108,7 +101,6 @@ loop = false
 script = ExtResource( 1 )
 move_speed = 75.0
 enemy_scene = ExtResource( 2 )
-bullet_kit = ExtResource( 3 )
 bullet_speed = 75.0
 
 [node name="3" type="PathFollow2D" parent="BottomPath"]
@@ -118,7 +110,6 @@ loop = false
 script = ExtResource( 1 )
 move_speed = 75.0
 enemy_scene = ExtResource( 2 )
-bullet_kit = ExtResource( 3 )
 bullet_speed = 75.0
 
 [node name="4" type="PathFollow2D" parent="BottomPath"]
@@ -128,7 +119,6 @@ loop = false
 script = ExtResource( 1 )
 move_speed = 75.0
 enemy_scene = ExtResource( 2 )
-bullet_kit = ExtResource( 3 )
 bullet_speed = 75.0
 
 [node name="5" type="PathFollow2D" parent="BottomPath"]
@@ -138,5 +128,4 @@ loop = false
 script = ExtResource( 1 )
 move_speed = 75.0
 enemy_scene = ExtResource( 2 )
-bullet_kit = ExtResource( 3 )
 bullet_speed = 75.0

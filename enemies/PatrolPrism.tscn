@@ -1,9 +1,8 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://enemies/patrol-prism-light.png" type="Texture" id=1]
 [ext_resource path="res://enemies/patrol-prism-base.png" type="Texture" id=2]
 [ext_resource path="res://enemies/Enemy.tscn" type="PackedScene" id=3]
-[ext_resource path="res://bullet_hell/enemy_bullet_red.tres" type="Resource" id=4]
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 2 )
@@ -49,9 +48,6 @@ frames = SubResource( 1 )
 texture = ExtResource( 1 )
 script = SubResource( 3 )
 light_gradient = SubResource( 4 )
-
-[node name="BulletsSpawner" parent="Body/TransformAdjust" index="0"]
-bullet_kit = ExtResource( 4 )
 
 [node name="Main Anchor" type="Node2D" parent="Body/TransformAdjust/BulletsSpawner" index="0"]
 position = Vector2( 4.00004, -13 )

@@ -2,6 +2,8 @@ extends Node2D
 
 class_name Player
 
+signal game_over
+
 export(float, 0, 200) var move_speed = 120.0
 export(Curve) var weapon_count_cost_multiplier : Curve
 export(int, 1, 10) var weapon_count_cost_limit = 4
@@ -150,8 +152,10 @@ func _on_zero_health():
 	tween.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
 	tween.tween_property(self, "position", Vector2(-80, 300), 2.0)
 	# Game over overlay after fall
-	tween.tween_callback(self, "emit_signal", ["game_over"])
+	tween.tween_callback(self, "_emit_game_over")
 	
+func _emit_game_over():
+	emit_signal("game_over")
 
 func _set_enable_cleanup(val : bool): enable_cleanup = val
 func _pass(): pass

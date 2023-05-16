@@ -19,40 +19,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://ui/banner.gd"
 }, {
-"base": "Resource",
-"class": "BasicBulletKit",
-"language": "NativeScript",
-"path": "res://addons/native_bullets/kits/basic_bullet_kit.gdns"
-}, {
-"base": "",
-"class": "BulletKit",
-"language": "NativeScript",
-"path": "res://addons/native_bullets/bullet_kit.gdns"
-}, {
 "base": "Node2D",
 "class": "BulletType",
 "language": "GDScript",
 "path": "res://bullet_hell/bullet_type.gd"
-}, {
-"base": "Node2D",
-"class": "Bullets",
-"language": "NativeScript",
-"path": "res://addons/native_bullets/bullets.gdns"
-}, {
-"base": "Node",
-"class": "BulletsEnvironment",
-"language": "GDScript",
-"path": "res://addons/native_bullets/bullets_environment.gd"
-}, {
-"base": "Node2D",
-"class": "BulletsSpawner",
-"language": "GDScript",
-"path": "res://addons/native_bullets/utils/bullets_spawner.gd"
-}, {
-"base": "Resource",
-"class": "DynamicBulletKit",
-"language": "NativeScript",
-"path": "res://addons/native_bullets/kits/dynamic_bullet_kit.gdns"
 }, {
 "base": "Node2D",
 "class": "Enemy",
@@ -63,16 +33,6 @@ _global_script_classes=[ {
 "class": "EntityStats",
 "language": "GDScript",
 "path": "res://common/entity_stats.gd"
-}, {
-"base": "",
-"class": "FollowingBulletKit",
-"language": "NativeScript",
-"path": "res://addons/native_bullets/kits/following_bullet_kit.gdns"
-}, {
-"base": "",
-"class": "FollowingDynamicBulletKit",
-"language": "NativeScript",
-"path": "res://addons/native_bullets/kits/following_dynamic_bullet_kit.gdns"
 }, {
 "base": "Node",
 "class": "Game",
@@ -124,16 +84,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://lib/sprite_utils.gd"
 }, {
-"base": "Node",
-"class": "TimedEvents",
-"language": "GDScript",
-"path": "res://addons/native_bullets/utils/timed_events.gd"
-}, {
-"base": "Node2D",
-"class": "TimedRotator",
-"language": "GDScript",
-"path": "res://addons/native_bullets/utils/timed_rotator.gd"
-}, {
 "base": "Control",
 "class": "Title",
 "language": "GDScript",
@@ -157,17 +107,9 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "AutoscrollParallax": "",
 "Banner": "",
-"BasicBulletKit": "res://addons/native_bullets/icons/icon_bullet_kit.svg",
-"BulletKit": "res://addons/native_bullets/icons/icon_bullet_kit.svg",
 "BulletType": "",
-"Bullets": "res://addons/native_bullets/icons/icon_bullets.svg",
-"BulletsEnvironment": "res://addons/native_bullets/icons/icon_bullets_environment.svg",
-"BulletsSpawner": "res://addons/native_bullets/icons/icon_bullet_properties.svg",
-"DynamicBulletKit": "res://addons/native_bullets/icons/icon_bullet_kit.svg",
 "Enemy": "",
 "EntityStats": "",
-"FollowingBulletKit": "res://addons/native_bullets/icons/icon_bullet_kit.svg",
-"FollowingDynamicBulletKit": "res://addons/native_bullets/icons/icon_bullet_kit.svg",
 "Game": "",
 "GameManagerUI": "",
 "GameOverOverlay": "",
@@ -178,8 +120,6 @@ _global_script_class_icons={
 "PooledBullet": "",
 "ScoreText": "",
 "SpriteUtils": "",
-"TimedEvents": "res://addons/native_bullets/icons/icon_timed_events.svg",
-"TimedRotator": "res://addons/native_bullets/icons/icon_timed_rotator.svg",
 "Title": "",
 "WarningLabel": "",
 "Wave": "",
@@ -194,7 +134,6 @@ config/icon="res://icon.png"
 
 [autoload]
 
-Bullets="*res://addons/native_bullets/bullets.gdns"
 GameManager="*res://game_manager.gd"
 AudioUtils="*res://sound/audio_utils.gd"
 BulletPincerMain="*res://bullet_hell/BulletPincerMain.tscn"
@@ -209,10 +148,6 @@ window/size/test_width=1280
 window/size/test_height=720
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
-
-[editor_plugins]
-
-enabled=PoolStringArray( "res://addons/native_bullets/plugin.cfg" )
 
 [gui]
 

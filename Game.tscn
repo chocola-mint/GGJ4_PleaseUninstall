@@ -1,9 +1,6 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://bullet_hell/enemy_bullet_red.tres" type="Resource" id=1]
 [ext_resource path="res://game.gd" type="Script" id=2]
-[ext_resource path="res://addons/native_bullets/bullets_environment.gd" type="Script" id=3]
-[ext_resource path="res://bullet_hell/pincer_shooter_bullet.tres" type="Resource" id=4]
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=5]
 [ext_resource path="res://third_party/vnitti/Glacial-mountains/glacial_mountains.png" type="Texture" id=6]
 [ext_resource path="res://autoscroll_parallax.gd" type="Script" id=7]
@@ -12,9 +9,7 @@
 [ext_resource path="res://third_party/vnitti/Glacial-mountains/clouds_mg_2.png" type="Texture" id=10]
 [ext_resource path="res://third_party/vnitti/Glacial-mountains/clouds_mg_3.png" type="Texture" id=11]
 [ext_resource path="res://third_party/vnitti/Glacial-mountains/cloud_lonely.png" type="Texture" id=12]
-[ext_resource path="res://bullet_hell/pincer_shooter_missile.tres" type="Resource" id=13]
 [ext_resource path="res://ui/GameUI.tscn" type="PackedScene" id=14]
-[ext_resource path="res://bullet_hell/enemy_bullet_blue.tres" type="Resource" id=15]
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 2 )
@@ -90,30 +85,6 @@ current = true
 
 [node name="Player" parent="." instance=ExtResource( 5 )]
 unique_name_in_owner = true
-
-[node name="BulletsEnvironment" type="Node" parent="."]
-script = ExtResource( 3 )
-bullet_kits = [ ExtResource( 4 ), ExtResource( 1 ), ExtResource( 13 ), ExtResource( 15 ) ]
-pools_sizes = [ 300, 300, 300, 300 ]
-parents_hints = [ null, null, null, null ]
-z_indices = [ 1, 2, 1, 2 ]
-bullet_types_amount = 4
-bullet_type_0/bullet_kit = ExtResource( 4 )
-bullet_type_0/pool_size = 300
-bullet_type_0/parent_hint = null
-bullet_type_0/z_index = 1
-bullet_type_1/bullet_kit = ExtResource( 1 )
-bullet_type_1/pool_size = 300
-bullet_type_1/parent_hint = null
-bullet_type_1/z_index = 2
-bullet_type_2/bullet_kit = ExtResource( 13 )
-bullet_type_2/pool_size = 300
-bullet_type_2/parent_hint = null
-bullet_type_2/z_index = 1
-bullet_type_3/bullet_kit = ExtResource( 15 )
-bullet_type_3/pool_size = 300
-bullet_type_3/parent_hint = null
-bullet_type_3/z_index = 2
 
 [node name="GameUI" parent="." instance=ExtResource( 14 )]
 margin_left = -160.0

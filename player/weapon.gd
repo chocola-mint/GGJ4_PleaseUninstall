@@ -3,7 +3,6 @@ extends Node2D
 class_name Weapon
 
 export var fall_time = 1.5
-export(Resource) var bullet_kit
 export(float, 0, 1000) var bullet_speed = 500.0
 export(float, 0, 3) var cooldown = 0.1
 export(float, 0.0001, 0.5) var power_cost = 0.001
@@ -70,15 +69,6 @@ func shoot_dud():
 	else: return false
 	
 func _spawn_bullet():
-	
-#	Bullets.spawn_bullet(bullet_kit, {
-#		"transform": shoot_anchor.global_transform,
-#		"velocity": Vector2(bullet_speed, 0),
-#		"lifetime": 10.0,
-#		"data": {
-#			"damage": bullet_kit.data.damage
-#		}
-#	})
 	pass
 func can_shoot(): 
 	return time - last_shoot_time > cooldown and _is_ready and not _uninstalling
