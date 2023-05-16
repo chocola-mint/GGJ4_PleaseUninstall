@@ -17,6 +17,7 @@ animations = [ {
 } ]
 
 [node name="BulletTemplate" instance=ExtResource( 1 )]
+z_index = 2
 collision_layer = 8
 
 [node name="AnimatedSprite" parent="." index="0"]

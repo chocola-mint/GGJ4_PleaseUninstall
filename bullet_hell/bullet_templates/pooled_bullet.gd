@@ -21,7 +21,7 @@ func kill():
 		is_alive = false
 		hitbox_shape.set_deferred("disabled", true)
 		var tween = create_tween()
-		var __ = tween.tween_property(self, "modulate:a", 0.0, 0.5)
+		var __ = tween.tween_property(self, "modulate:a", 0.0, 0.25)
 		__ = tween.tween_callback(self, "_go_inactive")
 func _go_inactive():
 	visible = false
